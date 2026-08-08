@@ -1,3 +1,5 @@
+import edu.sc.seis.macAppBundle.MacAppBundlePluginExtension
+
 description = "jGnash"
 
 val javaFXVersion: String by project    // extract JavaFX version from gradle.properties
@@ -15,13 +17,17 @@ plugins {
     application // creates a task to run the full application
     `java-library`
     id("org.openjfx.javafxplugin")
-    id("edu.sc.seis.macAppBundle")
+    id("edu.sc.seis.macAppBundle") apply false
+}
+
+val legacyMacPackagingRequested = gradle.startParameter.taskNames.any {
+    it.substringAfterLast(':') in setOf("createApp", "macDist", "macDistZip")
 }
 
 val jGnashVersion : String = version.toString()
 
 application {
-    mainClassName = "jgnash.app.jGnash"
+    mainClass.set("jgnash.app.jGnash")
 }
 
 dependencies {
@@ -149,12 +155,24 @@ distributions {
     }
 }
 
-macAppBundle {
-    appStyle = "universalJavaApplicationStub"
-    appName = "jGnash-$jGnashVersion"
-    mainClassName = "jgnash.app.jGnash"
-    icon = "../deployfx/gnome-money.icns"
-    javaProperties["apple.laf.useScreenMenuBar"] = "true"
+if (legacyMacPackagingRequested) {
+    // macAppBundle 2.3.0 reads the removed Java plugin "runtime" configuration.
+    // Keep this isolated compatibility view until PKG-01 replaces the plugin.
+    configurations.create("runtime") {
+        extendsFrom(configurations.runtimeClasspath.get())
+        isCanBeConsumed = false
+        isCanBeResolved = true
+    }
+
+    apply(plugin = "edu.sc.seis.macAppBundle")
+
+    configure<MacAppBundlePluginExtension> {
+        appStyle = "universalJavaApplicationStub"
+        appName = "jGnash-$jGnashVersion"
+        mainClassName = "jgnash.app.jGnash"
+        icon = "../deployfx/gnome-money.icns"
+        javaProperties["apple.laf.useScreenMenuBar"] = "true"
+    }
 }
 
 /**

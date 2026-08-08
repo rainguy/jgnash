@@ -19,6 +19,22 @@ This document is the reusable implementation plan for modernizing jGnash. It is 
 
 The plan deliberately separates build recovery, dependency upgrades, persistence migration, security work, architecture work, and user-facing changes. These areas should not be combined into one large pull request.
 
+## Execution tracking
+
+This document is also the authoritative execution ledger. A work item is marked complete only after its acceptance criteria have been implemented and validated. The implementation commit is recorded here; the plan annotation normally follows in a separate tracking commit so that the implementation hash is stable and known. Work items not listed in this table remain pending.
+
+| Work item | Status | Implementation commit | Completed | Notes |
+|---|---|---|---|---|
+| `BASE-01` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added the active support policy and linked it from the README. |
+| `BASE-02` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added the ADR process, template, index, and seven initial accepted decisions. |
+| `BASE-05` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added the modernization pull-request scope, compatibility, data-safety, security, validation, rollback, and documentation checklist. |
+| `SEC-07` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added private reporting routes, response targets, disclosure rules, and the current remote-mode warning. |
+
+Current milestone: `M0 - Baseline and safety net`
+
+- `BASE-03` remains pending until a reproducible Java 11 legacy environment runs and archives the baseline.
+- `BASE-04` remains pending until the synthetic data-format fixture catalog and independently reviewed summaries exist.
+
 ## 2. Current repository baseline
 
 The following observations were verified from the repository on 2026-08-07.
@@ -236,6 +252,8 @@ Each issue should use an ID from the work packages below, for example `BUILD-01`
 
 ### BASE-01: Record the support policy
 
+Status: **Complete** — implementation commit [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56)
+
 - Add `docs/support-policy.md`.
 - Define:
   - supported Java runtime;
@@ -251,6 +269,8 @@ Each issue should use an ID from the work packages below, for example `BUILD-01`
   - release checklist refers to it.
 
 ### BASE-02: Add architecture decision records
+
+Status: **Complete** — implementation commit [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56)
 
 - Create `docs/adr/README.md` with a lightweight ADR template.
 - Create initial ADRs for:
@@ -311,6 +331,8 @@ Each issue should use an ID from the work packages below, for example `BUILD-01`
   - fixture licenses/provenance are documented.
 
 ### BASE-05: Define modernization pull-request rules
+
+Status: **Complete** — implementation commit [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56)
 
 - Require each modernization PR to include:
   - one primary change category;
@@ -706,6 +728,8 @@ Each issue should use an ID from the work packages below, for example `BUILD-01`
 - Consider signed plugins only if there is a sustainable trust and key-management model.
 
 ### SEC-07: Add a vulnerability disclosure process
+
+Status: **Complete** — implementation commit [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56)
 
 - Add `SECURITY.md` with:
   - supported versions;

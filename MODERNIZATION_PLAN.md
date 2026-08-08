@@ -29,6 +29,7 @@ This document is also the authoritative execution ledger. A work item is marked 
 | `BASE-02` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added the ADR process, template, index, and seven initial accepted decisions. |
 | `BASE-03` | Complete | [`5c7038746`](https://github.com/rainguy/jgnash/commit/5c7038746) | 2026-08-07 | Archived the verified Temurin 11 environment, 345-test result set, nine runtime dependency reports, dependency-update snapshot, and successful legacy distribution fingerprint. |
 | `BASE-05` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added the modernization pull-request scope, compatibility, data-safety, security, validation, rollback, and documentation checklist. |
+| `BUILD-01` | In progress | [`211c8d16e`](https://github.com/rainguy/jgnash/commit/211c8d16e) (Gradle 7 bridge) | — | Completed the isolated 6.8.2 → 7.6.6 hop on Java 11 with the official wrapper checksums, no Gradle 7 deprecations, 345 passing tests, and a successful legacy distribution build. The Gradle 8.14 hop remains. |
 | `SEC-07` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added private reporting routes, response targets, disclosure rules, and the current remote-mode warning. |
 
 Current milestone: `M0 - Baseline and safety net`
@@ -353,6 +354,8 @@ Status: **Complete** — implementation commit [`4c4707d56`](https://github.com/
 ## 8. Phase 1: restore and modernize the build
 
 ### BUILD-01: Upgrade Gradle in controlled hops
+
+Status: **In progress** — Gradle 7 bridge commit [`211c8d16e`](https://github.com/rainguy/jgnash/commit/211c8d16e); Gradle 8.14 hop pending
 
 - Perform wrapper upgrades in isolated commits or PRs:
   1. Gradle 6.8.2 to the latest 7.6 patch using Java 11;

@@ -76,6 +76,12 @@ Please use the search tool to check for similar questions.
 
 The preferred method of reporting bugs is to use the [Github Issue tracker](https://github.com/ccavanaugh/jgnash/issues).
 
+Project maintenance policies:
+
+- [Support policy](docs/support-policy.md)
+- [Security policy](SECURITY.md)
+- [Modernization plan](MODERNIZATION_PLAN.md)
+
 ## Requirements
 
 ### 1. Java

@@ -1,0 +1,2 @@
+Synthetic fixture receipt
+Amount: 42.50 USD

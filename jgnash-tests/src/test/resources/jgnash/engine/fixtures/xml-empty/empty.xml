@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileFormat 3.6?>
+<object-stream>
+  <list id="1">
+    <CurrencyNode id="2" uuid="d3dff0f2-24d8-406f-977f-ecbcfa480fbe" symbol="USD" scale="2" prefix="$" suffix=""/>
+    <Config id="3" uuid="414b5491-84dd-49a8-8a5e-406d843daf86">
+      <defaultCurrency reference="2"/>
+      <accountSeparator>:</accountSeparator>
+      <fileFormat>3.6</fileFormat>
+      <transactionNumberItems id="4"/>
+      <preferences id="5">
+        <entry>
+          <string>CreateBackups</string>
+          <string>false</string>
+        </entry>
+      </preferences>
+    </Config>
+    <RootAccount id="6" uuid="609b0746-6ffe-48ae-a4cb-94c951668611" placeHolder="false" locked="false" visible="true" name="Root" description="Root">
+      <transactions id="7"/>
+      <securities id="8"/>
+      <accountType>ROOT</accountType>
+      <excludedFromBudget>false</excludedFromBudget>
+      <notes></notes>
+      <currencyNode reference="2"/>
+      <children id="9"/>
+      <accountNumber></accountNumber>
+      <accountCode>0</accountCode>
+      <attributes id="10"/>
+    </RootAccount>
+  </list>
+</object-stream>

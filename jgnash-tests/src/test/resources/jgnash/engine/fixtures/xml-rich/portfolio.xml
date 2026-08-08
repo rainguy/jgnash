@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileFormat 3.6?>
+<object-stream>
+  <list id="1">
+    <CurrencyNode id="2" uuid="9c80192c-64f3-4b42-9d26-485fd1023935" symbol="USD" scale="2" prefix="$" suffix=""/>
+    <CurrencyNode id="3" uuid="30f97e99-971b-4ead-82f8-57274af34e18" symbol="EUR" scale="2" prefix="" suffix="" description="en_US"/>
+    <SecurityNode id="4" uuid="d88af15f-6c90-48af-a877-e0d9894b6bfa" symbol="SYNTH" scale="2" prefix="" suffix="" description="Synthetic Index Fund">
+      <reportedCurrency reference="2"/>
+      <quoteSource>NONE</quoteSource>
+      <historyNodes id="5"/>
+      <securityHistoryEvents id="6"/>
+    </SecurityNode>
+    <Config id="7" uuid="bc09551a-28cd-4336-94ed-0ed96ef5104e">
+      <defaultCurrency reference="2"/>
+      <accountSeparator>:</accountSeparator>
+      <fileFormat>3.6</fileFormat>
+      <transactionNumberItems id="8"/>
+      <preferences id="9">
+        <entry>
+          <string>CreateBackups</string>
+          <string>false</string>
+        </entry>
+      </preferences>
+    </Config>
+    <RootAccount id="10" uuid="90a0baf6-2a6c-424b-bb98-c8c14bc1b29e" placeHolder="false" locked="false" visible="true" name="Root" description="Root">
+      <transactions id="11"/>
+      <securities id="12"/>
+      <accountType>ROOT</accountType>
+      <excludedFromBudget>false</excludedFromBudget>
+      <notes></notes>
+      <currencyNode reference="2"/>
+      <children id="13">
+        <Account id="14" uuid="7569d858-0406-40c5-9f10-91c8fe0914f3" placeHolder="false" locked="false" visible="true" name="Liabilities" description="">
+          <parentAccount class="RootAccount" reference="10"/>
+          <transactions id="15"/>
+          <securities id="16"/>
+          <accountType>LIABILITY</accountType>
+          <excludedFromBudget>false</excludedFromBudget>
+          <notes></notes>
+          <currencyNode reference="2"/>
+          <children id="17">
+            <Account id="18" uuid="1352edfc-6faa-4403-82d5-a1bf938aada9" placeHolder="false" locked="false" visible="true" name="Credit Card" description="">
+              <parentAccount reference="14"/>
+              <transactions id="19">
+                <Transaction id="20" uuid="ca6c8c82-8844-4d61-90b5-ded5ff581a18">
+                  <date>2020-05-05</date>
+                  <timestamp>1786151196838</timestamp>
+                  <number>1004</number>
+                  <payee>Example Store</payee>
+                  <attachment>synthetic-receipt.txt</attachment>
+                  <memo>Synthetic receipt</memo>
+                  <transactionEntries id="21">
+                    <TransactionEntry id="22">
+                      <transactionTag>BANK</transactionTag>
+                      <debitAccount id="23" uuid="ad6cff75-6f71-4ada-b23f-da1a2e8c17c1" placeHolder="false" locked="false" visible="true" name="Groceries" description="">
+                        <parentAccount id="24" uuid="db0e208d-024c-4042-a1aa-8ab47bf0ddae" placeHolder="false" locked="false" visible="true" name="Expenses" description="">
+                          <parentAccount class="RootAccount" reference="10"/>
+                          <transactions id="25"/>
+                          <securities id="26"/>
+                          <accountType>EXPENSE</accountType>
+                          <excludedFromBudget>false</excludedFromBudget>
+                          <notes></notes>
+                          <currencyNode reference="2"/>
+                          <children id="27">
+                            <Account id="28" uuid="f3182b49-d74f-4601-8c2e-2ee6a84144af" placeHolder="false" locked="false" visible="true" name="Fees" description="">
+                              <parentAccount reference="24"/>
+                              <transactions id="29">
+                                <Transaction id="30" uuid="b917846e-a8e2-43a9-b771-be48f7840628">
+                                  <date>2020-03-15</date>
+                                  <timestamp>1786151196831</timestamp>
+                                  <number>1003</number>
+                                  <payee>Example Market</payee>
+                                  <memo>Synthetic split purchase</memo>
+                                  <transactionEntries id="31">
+                                    <TransactionEntry id="32">
+                                      <transactionTag>BANK</transactionTag>
+                                      <debitAccount id="33" uuid="bbff2771-644c-4305-aaa0-50f7d201eefd" placeHolder="false" locked="false" visible="true" name="Checking" description="">
+                                        <parentAccount id="34" uuid="d534c350-8735-44d6-8b28-f527c758e7cc" placeHolder="false" locked="false" visible="true" name="Assets" description="">
+                                          <parentAccount class="RootAccount" reference="10"/>
+                                          <transactions id="35"/>
+                                          <securities id="36"/>
+                                          <accountType>ASSET</accountType>
+                                          <excludedFromBudget>false</excludedFromBudget>
+                                          <notes></notes>
+                                          <currencyNode reference="2"/>
+                                          <children id="37">
+                                            <Account id="38" uuid="6929668a-6156-434f-a58e-f5ea5d79fa61" placeHolder="false" locked="false" visible="true" name="Brokerage" description="">
+                                              <parentAccount reference="34"/>
+                                              <transactions id="39">
+                                                <InvestmentTransaction id="40" uuid="b2678af7-daac-4b76-9f3e-f98db8667227">
+                                                  <date>2020-04-01</date>
+                                                  <timestamp>1786151196832</timestamp>
+                                                  <payee>Add : SYNTH 4.0000 @ $25.00</payee>
+                                                  <memo>Synthetic investment lot</memo>
+                                                  <transactionEntries id="41">
+                                                    <TransactionEntryAddX id="42">
+                                                      <transactionTag>INVESTMENT</transactionTag>
+                                                      <debitAccount reference="38"/>
+                                                      <creditAccount reference="38"/>
+                                                      <creditAmount>0</creditAmount>
+                                                      <debitAmount>0</debitAmount>
+                                                      <creditReconciled>NOT_RECONCILED</creditReconciled>
+                                                      <debitReconciled>NOT_RECONCILED</debitReconciled>
+                                                      <memo>Synthetic investment lot</memo>
+                                                      <tags id="43"/>
+                                                      <securityNode reference="4"/>
+                                                      <price>25.00</price>
+                                                      <quantity>4.0000</quantity>
+                                                    </TransactionEntryAddX>
+                                                  </transactionEntries>
+                                                </InvestmentTransaction>
+                                              </transactions>
+                                              <securities id="44">
+                                                <SecurityNode reference="4"/>
+                                              </securities>
+                                              <accountType>INVEST</accountType>
+                                              <excludedFromBudget>false</excludedFromBudget>
+                                              <notes></notes>
+                                              <currencyNode reference="2"/>
+                                              <children id="45"/>
+                                              <accountNumber></accountNumber>
+                                              <accountCode>0</accountCode>
+                                              <attributes id="46"/>
+                                            </Account>
+                                            <Account id="47" uuid="4e7855a2-184e-4175-88c9-3ce97cdc3316" placeHolder="false" locked="false" visible="true" name="Euro Wallet" description="">
+                                              <parentAccount reference="34"/>
+                                              <transactions id="48">
+                                                <Transaction id="49" uuid="ea4fa2b9-1af3-4420-8d45-cde4a28b7c78">
+                                                  <date>2020-02-20</date>
+                                                  <timestamp>1786151196829</timestamp>
+                                                  <number>1002</number>
+                                                  <payee>Example Exchange</payee>
+                                                  <memo>Synthetic currency transfer</memo>
+                                                  <transactionEntries id="50">
+                                                    <TransactionEntry id="51">
+                                                      <transactionTag>BANK</transactionTag>
+                                                      <debitAccount reference="47"/>
+                                                      <creditAccount reference="33"/>
+                                                      <creditAmount>110.00</creditAmount>
+                                                      <debitAmount>100.00</debitAmount>
+                                                      <creditReconciled>NOT_RECONCILED</creditReconciled>
+                                                      <debitReconciled>NOT_RECONCILED</debitReconciled>
+                                                      <memo>Synthetic currency transfer</memo>
+                                                      <tags id="52"/>
+                                                    </TransactionEntry>
+                                                  </transactionEntries>
+                                                </Transaction>
+                                              </transactions>
+                                              <securities id="53"/>
+                                              <accountType>CASH</accountType>
+                                              <excludedFromBudget>false</excludedFromBudget>
+                                              <notes></notes>
+                                              <currencyNode reference="3"/>
+                                              <children id="54"/>
+                                              <accountNumber></accountNumber>
+                                              <accountCode>0</accountCode>
+                                              <attributes id="55"/>
+                                            </Account>
+                                            <Account reference="33"/>
+                                          </children>
+                                          <accountNumber></accountNumber>
+                                          <accountCode>0</accountCode>
+                                          <attributes id="56"/>
+                                        </parentAccount>
+                                        <transactions id="57">
+                                          <Transaction reference="49"/>
+                                          <Transaction reference="30"/>
+                                          <Transaction id="58" uuid="4345656d-93eb-4ab2-8ae4-bc20c0670899">
+                                            <date>2020-01-10</date>
+                                            <timestamp>1786151196827</timestamp>
+                                            <number>1001</number>
+                                            <payee>Example Employer</payee>
+                                            <memo>Synthetic salary</memo>
+                                            <transactionEntries id="59">
+                                              <TransactionEntry id="60">
+                                                <transactionTag>BANK</transactionTag>
+                                                <debitAccount id="61" uuid="d75a4f72-a27d-47aa-a2ad-eb55aaf2a045" placeHolder="false" locked="false" visible="true" name="Salary" description="">
+                                                  <parentAccount id="62" uuid="495fc17f-320b-4398-b24e-29c24a27d727" placeHolder="false" locked="false" visible="true" name="Income" description="">
+                                                    <parentAccount class="RootAccount" reference="10"/>
+                                                    <transactions id="63"/>
+                                                    <securities id="64"/>
+                                                    <accountType>INCOME</accountType>
+                                                    <excludedFromBudget>false</excludedFromBudget>
+                                                    <notes></notes>
+                                                    <currencyNode reference="2"/>
+                                                    <children id="65">
+                                                      <Account reference="61"/>
+                                                      <Account id="66" uuid="b4d76451-964e-4df8-9473-9fd331b699fa" placeHolder="false" locked="false" visible="true" name="Dividends" description="">
+                                                        <parentAccount reference="62"/>
+                                                        <transactions id="67"/>
+                                                        <securities id="68"/>
+                                                        <accountType>INCOME</accountType>
+                                                        <excludedFromBudget>false</excludedFromBudget>
+                                                        <notes></notes>
+                                                        <currencyNode reference="2"/>
+                                                        <children id="69"/>
+                                                        <accountNumber></accountNumber>
+                                                        <accountCode>0</accountCode>
+                                                        <attributes id="70"/>
+                                                      </Account>
+                                                    </children>
+                                                    <accountNumber></accountNumber>
+                                                    <accountCode>0</accountCode>
+                                                    <attributes id="71"/>
+                                                  </parentAccount>
+                                                  <transactions id="72">
+                                                    <Transaction reference="58"/>
+                                                  </transactions>
+                                                  <securities id="73"/>
+                                                  <accountType>INCOME</accountType>
+                                                  <excludedFromBudget>false</excludedFromBudget>
+                                                  <notes></notes>
+                                                  <currencyNode reference="2"/>
+                                                  <children id="74"/>
+                                                  <accountNumber></accountNumber>
+                                                  <accountCode>0</accountCode>
+                                                  <attributes id="75"/>
+                                                </debitAccount>
+                                                <creditAccount reference="33"/>
+                                                <creditAmount>2500.00</creditAmount>
+                                                <debitAmount>-2500.00</debitAmount>
+                                                <creditReconciled>RECONCILED</creditReconciled>
+                                                <debitReconciled>NOT_RECONCILED</debitReconciled>
+                                                <memo>Synthetic salary</memo>
+                                                <tags id="76">
+                                                  <Tag id="77" uuid="0621ede8-c49c-4f70-9975-28a75abefd64" name="reviewed" color="255" unicode="63332">
+                                                    <description>Synthetic reviewed transaction</description>
+                                                  </Tag>
+                                                </tags>
+                                              </TransactionEntry>
+                                            </transactionEntries>
+                                          </Transaction>
+                                        </transactions>
+                                        <securities id="78"/>
+                                        <accountType>CHECKING</accountType>
+                                        <excludedFromBudget>false</excludedFromBudget>
+                                        <notes></notes>
+                                        <currencyNode reference="2"/>
+                                        <children id="79"/>
+                                        <accountNumber></accountNumber>
+                                        <accountCode>0</accountCode>
+                                        <attributes id="80"/>
+                                      </debitAccount>
+                                      <creditAccount reference="23"/>
+                                      <creditAmount>60.00</creditAmount>
+                                      <debitAmount>-60.00</debitAmount>
+                                      <creditReconciled>NOT_RECONCILED</creditReconciled>
+                                      <debitReconciled>NOT_RECONCILED</debitReconciled>
+                                      <memo>Groceries portion</memo>
+                                      <tags id="81">
+                                        <Tag id="82" uuid="7e25e604-c8aa-4806-a6eb-701e54a4ae50" name="household" color="255" unicode="63332">
+                                          <description>Synthetic household spending</description>
+                                        </Tag>
+                                      </tags>
+                                    </TransactionEntry>
+                                    <TransactionEntry id="83">
+                                      <transactionTag>BANK</transactionTag>
+                                      <debitAccount reference="33"/>
+                                      <creditAccount reference="28"/>
+                                      <creditAmount>10.00</creditAmount>
+                                      <debitAmount>-10.00</debitAmount>
+                                      <creditReconciled>NOT_RECONCILED</creditReconciled>
+                                      <debitReconciled>NOT_RECONCILED</debitReconciled>
+                                      <memo>Fee portion</memo>
+                                      <tags id="84">
+                                        <Tag reference="82"/>
+                                      </tags>
+                                    </TransactionEntry>
+                                  </transactionEntries>
+                                </Transaction>
+                              </transactions>
+                              <securities id="85"/>
+                              <accountType>EXPENSE</accountType>
+                              <excludedFromBudget>false</excludedFromBudget>
+                              <notes></notes>
+                              <currencyNode reference="2"/>
+                              <children id="86"/>
+                              <accountNumber></accountNumber>
+                              <accountCode>0</accountCode>
+                              <attributes id="87"/>
+                            </Account>
+                            <Account reference="23"/>
+                          </children>
+                          <accountNumber></accountNumber>
+                          <accountCode>0</accountCode>
+                          <attributes id="88"/>
+                        </parentAccount>
+                        <transactions id="89">
+                          <Transaction reference="30"/>
+                          <Transaction reference="20"/>
+                        </transactions>
+                        <securities id="90"/>
+                        <accountType>EXPENSE</accountType>
+                        <excludedFromBudget>false</excludedFromBudget>
+                        <notes></notes>
+                        <currencyNode reference="2"/>
+                        <children id="91"/>
+                        <accountNumber></accountNumber>
+                        <accountCode>0</accountCode>
+                        <attributes id="92"/>
+                      </debitAccount>
+                      <creditAccount reference="18"/>
+                      <creditAmount>42.50</creditAmount>
+                      <debitAmount>-42.50</debitAmount>
+                      <creditReconciled>NOT_RECONCILED</creditReconciled>
+                      <debitReconciled>NOT_RECONCILED</debitReconciled>
+                      <memo>Synthetic receipt</memo>
+                      <tags id="93"/>
+                    </TransactionEntry>
+                  </transactionEntries>
+                </Transaction>
+              </transactions>
+              <securities id="94"/>
+              <accountType>CREDIT</accountType>
+              <excludedFromBudget>false</excludedFromBudget>
+              <notes></notes>
+              <currencyNode reference="2"/>
+              <children id="95"/>
+              <accountNumber></accountNumber>
+              <accountCode>0</accountCode>
+              <attributes id="96"/>
+            </Account>
+          </children>
+          <accountNumber></accountNumber>
+          <accountCode>0</accountCode>
+          <attributes id="97"/>
+        </Account>
+        <Account reference="34"/>
+        <Account reference="24"/>
+        <Account reference="62"/>
+      </children>
+      <accountNumber></accountNumber>
+      <accountCode>0</accountCode>
+      <attributes id="98"/>
+    </RootAccount>
+    <ExchangeRate id="99" uuid="7ada99c3-c8b1-46ee-9583-29b0c3c84600">
+      <historyNodes id="100">
+        <ExchangeRateHistoryNode id="101">
+          <rate>0.9090909090909091</rate>
+          <date>2020-02-20</date>
+        </ExchangeRateHistoryNode>
+      </historyNodes>
+      <rateId>USDEUR</rateId>
+    </ExchangeRate>
+    <Tag reference="77"/>
+    <Tag reference="82"/>
+    <Budget id="102" uuid="57de5d15-53d6-4dd8-8be2-84467f38a3e1" name="Synthetic Household Budget" description="Generated exclusively for migration tests" roundingMode="FLOOR" roundingScale="2" startMonth="JANUARY">
+      <budgetPeriod>MONTHLY</budgetPeriod>
+      <accountGoals id="103"/>
+      <assetAccountsIncluded>false</assetAccountsIncluded>
+      <incomeAccountsIncluded>true</incomeAccountsIncluded>
+      <expenseAccountsIncluded>true</expenseAccountsIncluded>
+      <liabilityAccountsIncluded>false</liabilityAccountsIncluded>
+    </Budget>
+    <jgnash.engine.recurring.MonthlyReminder id="104" uuid="69fd1234-8395-4cc6-aef7-6395972a786d">
+      <daysAdvance>0</daysAdvance>
+      <autoCreate>false</autoCreate>
+      <description>Synthetic monthly transfer</description>
+      <enabled>true</enabled>
+      <increment>1</increment>
+      <notes>No real person or institution</notes>
+      <startDate>2020-06-01</startDate>
+      <account reference="33"/>
+      <transaction id="105" uuid="c76c8572-bd2b-495b-9f44-525ad0a99c50">
+        <date>2020-06-01</date>
+        <timestamp>1786151196847</timestamp>
+        <number>R-1</number>
+        <payee>Example</payee>
+        <memo>Reminder template</memo>
+        <transactionEntries id="106">
+          <TransactionEntry id="107">
+            <transactionTag>BANK</transactionTag>
+            <debitAccount reference="62"/>
+            <creditAccount reference="33"/>
+            <creditAmount>5.00</creditAmount>
+            <debitAmount>-5.00</debitAmount>
+            <creditReconciled>NOT_RECONCILED</creditReconciled>
+            <debitReconciled>NOT_RECONCILED</debitReconciled>
+            <memo>Reminder template</memo>
+            <tags id="108"/>
+          </TransactionEntry>
+        </transactionEntries>
+      </transaction>
+      <type>0</type>
+    </jgnash.engine.recurring.MonthlyReminder>
+  </list>
+</object-stream>

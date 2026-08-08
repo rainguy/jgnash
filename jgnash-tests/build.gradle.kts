@@ -49,6 +49,24 @@ tasks.test {
     }
 }
 
+tasks.register<JavaExec>("generateDataFormatFixtures") {
+    group = "verification"
+    description = "Regenerates the synthetic persistence fixture payloads"
+    dependsOn(tasks.testClasses)
+    classpath = sourceSets.test.get().runtimeClasspath
+    mainClass.set("jgnash.engine.fixture.DataFormatFixtureGenerator")
+    args(layout.projectDirectory.dir("src/test/resources/jgnash/engine/fixtures").asFile.absolutePath)
+}
+
+tasks.register<JavaExec>("printDataFormatFixtureSummaries") {
+    group = "verification"
+    description = "Opens copied fixtures and prints independently derived semantic summaries"
+    dependsOn(tasks.testClasses)
+    classpath = sourceSets.test.get().runtimeClasspath
+    mainClass.set("jgnash.engine.fixture.DataFormatFixtureSummaryPrinter")
+    args(layout.projectDirectory.dir("src/test/resources/jgnash/engine/fixtures").asFile.absolutePath)
+}
+
 tasks.jar {
     manifest.attributes["Automatic-Module-Name"] = moduleName
 }

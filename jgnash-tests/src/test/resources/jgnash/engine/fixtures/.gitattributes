@@ -1,0 +1,4 @@
+# Generated persistence payloads must remain byte-for-byte stable.
+*.bxds binary
+*.db binary
+*.script binary

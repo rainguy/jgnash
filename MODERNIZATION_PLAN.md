@@ -27,12 +27,13 @@ This document is also the authoritative execution ledger. A work item is marked 
 |---|---|---|---|---|
 | `BASE-01` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added the active support policy and linked it from the README. |
 | `BASE-02` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added the ADR process, template, index, and seven initial accepted decisions. |
+| `BASE-03` | Complete | [`5c7038746`](https://github.com/rainguy/jgnash/commit/5c7038746) | 2026-08-07 | Archived the verified Temurin 11 environment, 345-test result set, nine runtime dependency reports, dependency-update snapshot, and successful legacy distribution fingerprint. |
 | `BASE-05` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added the modernization pull-request scope, compatibility, data-safety, security, validation, rollback, and documentation checklist. |
 | `SEC-07` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added private reporting routes, response targets, disclosure rules, and the current remote-mode warning. |
 
 Current milestone: `M0 - Baseline and safety net`
 
-- `BASE-03` remains pending until a reproducible Java 11 legacy environment runs and archives the baseline.
+- `BASE-03` is complete; its reproducible legacy evidence is stored under `docs/baselines/legacy-java11`.
 - `BASE-04` remains pending until the synthetic data-format fixture catalog and independently reviewed summaries exist.
 
 ## 2. Current repository baseline
@@ -284,6 +285,8 @@ Status: **Complete** — implementation commit [`4c4707d56`](https://github.com/
 - Every ADR must include context, decision, alternatives, consequences, and rollback/revisit conditions.
 
 ### BASE-03: Capture a legacy build baseline
+
+Status: **Complete** — implementation commit [`5c7038746`](https://github.com/rainguy/jgnash/commit/5c7038746)
 
 - Provision a reproducible Java 11 environment solely for the legacy baseline.
 - Run and archive:

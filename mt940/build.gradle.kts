@@ -3,6 +3,7 @@ description = "mt940 Plugin"
 val javaFXVersion: String by project    // extract JavaFX version from gradle.properties
 
 val junitVersion: String by project
+val junitPlatformVersion: String by project
 val junitExtensionsVersion: String by project
 val awaitilityVersion: String by project
 
@@ -14,6 +15,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
     testImplementation("io.github.glytching:junit-extensions:$junitExtensionsVersion")
     testImplementation("org.awaitility:awaitility:$awaitilityVersion")
 

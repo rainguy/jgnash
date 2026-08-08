@@ -10,6 +10,7 @@ val commonsLangVersion: String by project
 val commonsMathVersion: String by project
 
 val junitVersion: String by project
+val junitPlatformVersion: String by project
 val junitExtensionsVersion: String by project
 val awaitilityVersion: String by project
 
@@ -25,6 +26,7 @@ val legacyMacPackagingRequested = gradle.startParameter.taskNames.any {
 }
 
 val jGnashVersion : String = version.toString()
+val macAppDirectory = layout.buildDirectory.dir("macApp")
 
 application {
     mainClass.set("jgnash.app.jGnash")
@@ -34,6 +36,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
     testImplementation("io.github.glytching:junit-extensions:$junitExtensionsVersion")
     testImplementation("org.awaitility:awaitility:$awaitilityVersion")
 
@@ -208,7 +211,10 @@ tasks.register("macDist") {
         configurations.runtimeClasspath.get().files.forEach {
             // copy all files in the class path, but ignore windows and linux specific files
             if (!it.name.contains("linux.jar") && !it.name.contains("win.jar")) {
-                it.copyTo(file("$buildDir/macApp/jGnash-$jGnashVersion.app/Contents/Java/" + it.name), true)
+                val javaDirectory = macAppDirectory.get()
+                    .dir("jGnash-$jGnashVersion.app/Contents/Java")
+                    .asFile
+                it.copyTo(javaDirectory.resolve(it.name), true)
             }
         }
     }
@@ -221,7 +227,7 @@ tasks.register<Zip>("macDistZip") {
     archiveFileName.set("jGnash-$jGnashVersion.App.zip")
     destinationDirectory.set(rootDir)
 
-    from("$buildDir/macApp")
+    from(macAppDirectory)
 
     from("../jgnash-manual/src/Manual.pdf") {
         into("jGnash-$jGnashVersion.app/Contents/SharedSupport")

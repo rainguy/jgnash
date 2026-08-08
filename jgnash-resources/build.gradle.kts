@@ -1,12 +1,10 @@
-import org.gradle.internal.jvm.Jvm
-import org.gradle.internal.os.OperatingSystem.current
 import java.util.*
 
 description = "jGnash Resources"
 
 val moduleName = "jgnash.resources"
-val osName = current()!!
-val javaVersion = Jvm.current()!!
+val osName = System.getProperty("os.name")
+val javaVersion = System.getProperty("java.version")
 val timeStamp = Date()
 
 tasks.withType<ProcessResources> {
@@ -24,7 +22,6 @@ tasks.withType<ProcessResources> {
 tasks.jar {
     manifest.attributes["Automatic-Module-Name"] = moduleName
 }
-
 
 
 

@@ -1,6 +1,6 @@
 # jGnash Modernization Plan
 
-Status: proposed
+Status: in progress
 
 Prepared: 2026-08-07
 
@@ -28,15 +28,16 @@ This document is also the authoritative execution ledger. A work item is marked 
 | `BASE-01` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added the active support policy and linked it from the README. |
 | `BASE-02` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added the ADR process, template, index, and seven initial accepted decisions. |
 | `BASE-03` | Complete | [`5c7038746`](https://github.com/rainguy/jgnash/commit/5c7038746) | 2026-08-07 | Archived the verified Temurin 11 environment, 345-test result set, nine runtime dependency reports, dependency-update snapshot, and successful legacy distribution fingerprint. |
+| `BASE-04` | Complete | [`499c7d06a`](https://github.com/rainguy/jgnash/commit/499c7d06a) | 2026-08-07 | Added 10 valid and five truncated synthetic fixtures spanning all five persistence stores, the three SQL password variants, reviewed semantic summaries, payload hashes with full manifest coverage, and documented generation/provenance. The 20-test catalog suite passes on both Java 21 and the recorded Java 11 baseline; the full Java 21 suite passes with 365 tests and two skips. |
 | `BASE-05` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added the modernization pull-request scope, compatibility, data-safety, security, validation, rollback, and documentation checklist. |
 | `BUILD-01` | Complete | [`211c8d16e`](https://github.com/rainguy/jgnash/commit/211c8d16e) (Gradle 7 bridge), [`f49a0aaba`](https://github.com/rainguy/jgnash/commit/f49a0aaba) (Gradle 8 target) | 2026-08-07 | Completed the isolated 6.8.2 → 7.6.6 → 8.14.3 path with official wrapper checksums, fatal deprecation gates, public Gradle APIs, explicit JUnit launchers, and successful legacy distribution builds. |
 | `BUILD-02` | Implemented; CI verification pending | [`a85f599c9`](https://github.com/rainguy/jgnash/commit/a85f599c9) | — | Declared Java 21 toolchains and release bytecode, moved CI definitions to Temurin 21, documented discovery, and fixed Java 21 Nashorn, PDF locale-spacing, and Javadoc compatibility. The isolated 345-test suite, Java 17 launcher → Java 21 compiler proof, class-file version 65 check, Javadoc, and distribution build pass. GitHub reported zero checks/runs after the push, so clean hosted-CI acceptance remains open until Actions is enabled for this fork. |
 | `SEC-07` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added private reporting routes, response targets, disclosure rules, and the current remote-mode warning. |
 
-Current milestone: `M0 - Baseline and safety net`
+Current milestone: `M1 - Build restored on Java 21`
 
-- `BASE-03` is complete; its reproducible legacy evidence is stored under `docs/baselines/legacy-java11`.
-- `BASE-04` remains pending until the synthetic data-format fixture catalog and independently reviewed summaries exist.
+- `M0 - Baseline and safety net` is complete; all five `BASE` work items have accepted implementation commits.
+- `BUILD-02` is implemented and locally validated, but hosted-CI acceptance remains pending because this fork has not created GitHub Actions runs.
 
 ## 2. Current repository baseline
 
@@ -305,6 +306,8 @@ Status: **Complete** — implementation commit [`5c7038746`](https://github.com/
   - no production sources change in this issue.
 
 ### BASE-04: Build a data-format fixture catalog
+
+Status: **Complete** — implementation commit [`499c7d06a`](https://github.com/rainguy/jgnash/commit/499c7d06a)
 
 - Inventory every supported extension and on-disk variant.
 - Include fixtures for:

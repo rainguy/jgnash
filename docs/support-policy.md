@@ -19,9 +19,9 @@ Security and data-loss fixes take priority over feature work. A release is suppo
 
 ## Java support
 
-- Current legacy source declares Java 11 or newer, but its pinned Gradle 6.8.2 build does not run successfully on Java 21.
-- Java 11 remains the legacy-baseline runtime until the build-recovery milestone is complete.
-- Java 21 is the first modernization target.
+- Current `master` compiles and tests with an explicit Java 21 toolchain and emits Java 21 bytecode.
+- Java 11 is retained solely for reproducing the archived legacy baseline and for migration-source verification.
+- Java 21 is the modernization target, but it becomes a supported release runtime only after the remaining release gates pass.
 - A newer JDK is not supported merely because the application happens to start on it.
 - A JDK becomes supported only after clean build, unit, integration, migration, packaged-startup, and relevant UI tests pass.
 - Preview Java features are not supported in production releases.

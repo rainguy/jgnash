@@ -8,11 +8,13 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-java@master
+      - uses: actions/setup-java@v4
         with:
-          java-version: '11'
+          distribution: 'temurin'
+          java-version: '21'
           architecture: 'x64'
+          cache: 'gradle'
 
-      - run: ./gradlew.bat test
+      - run: ./gradlew.bat test --warning-mode fail

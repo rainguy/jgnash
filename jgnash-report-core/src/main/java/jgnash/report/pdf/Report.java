@@ -699,7 +699,7 @@ public abstract class Report implements AutoCloseable {
                                  final String text) throws IOException {
         contentStream.beginText();
         contentStream.newLineAtOffset(xStart, yStart);
-        contentStream.showText(text);
+        contentStream.showText(normalizeBaseFontText(text));
         contentStream.endText();
     }
 
@@ -825,7 +825,15 @@ public abstract class Report implements AutoCloseable {
     }
 
     private static float getStringWidth(final String text, final PDFont font, final float fontSize) throws IOException {
-        return (float) Math.ceil(font.getStringWidth(text) / 1000f * fontSize);
+        return (float) Math.ceil(font.getStringWidth(normalizeBaseFontText(text)) / 1000f * fontSize);
+    }
+
+    /**
+     * Normalizes locale spacing that is not representable by PDF base-font WinAnsi encodings.
+     * Java 21's CLDR locale data uses narrow no-break spaces in currency values.
+     */
+    private static String normalizeBaseFontText(final String text) {
+        return text.replace('\u00A0', ' ').replace('\u202F', ' ');
     }
 
     public String getEllipsis() {

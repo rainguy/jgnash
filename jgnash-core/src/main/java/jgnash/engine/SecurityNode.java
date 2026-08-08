@@ -223,10 +223,10 @@ public class SecurityNode extends CommodityNode {
 
 
     /**
-     * Returns <tt>true</tt> if this SecurityNode contains the specified element.
+     * Returns {@code true} if this SecurityNode contains the specified element.
      *
      * @param date LocalDate whose presence in this SecurityNode is to be tested
-     * @return <tt>true</tt> if this SecurityNode contains a SecurityHistoryNode with the specified date
+     * @return {@code true} if this SecurityNode contains a SecurityHistoryNode with the specified date
      */
     public boolean contains(final LocalDate date) {
         boolean result = false;

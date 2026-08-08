@@ -34,7 +34,7 @@ package jgnash.plugin;
  * item.putClientProperty(Plugin.PRECEDINGMENUIDREF, "paste-command");
  * }
  * <p>
- * The above example will install a menu item after <tt>Paste</tt> in the <tt>Edit</tt> menu.
+ * The above example will install a menu item after {@code Paste} in the {@code Edit} menu.
  *
  * @author Leif-Erik Dörr
  * @author Craig Cavanaugh

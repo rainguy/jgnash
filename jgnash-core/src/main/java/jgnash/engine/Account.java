@@ -275,7 +275,7 @@ public class Account extends StoredObject implements Comparable<Account> {
      * Adds account transaction in chronological order.
      *
      * @param tran the {@code Transaction} to be added
-     * @return <tt>true</tt> the transaction was added successful <tt>false</tt> the transaction was already attached
+     * @return {@code true} if the transaction was added successfully; {@code false} if it was already attached
      * to this account
      */
     boolean addTransaction(final Transaction tran) {

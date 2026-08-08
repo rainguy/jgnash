@@ -224,7 +224,10 @@ communication and unit tests are performed to prevent regressions.
 
 To build jGnash you'll need the following software installed and correctly configured on your system:
 
-OpenJDK 11 or later.
+OpenJDK 21 is required for current development builds. Gradle selects the Java
+21 compiler and test runtime through its toolchain configuration. See
+https://github.com/rainguy/jgnash/blob/master/docs/building.md[Java 21 build requirements]
+for discovery and troubleshooting.
 
 _If you are building with a recent 64bit Linux system, you may need to enable Multilib/32 Bit support capabilities.
 Otherwise, the Gradle build may fail when building the windows executables._

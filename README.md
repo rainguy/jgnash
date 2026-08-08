@@ -81,6 +81,7 @@ Project maintenance policies:
 - [Support policy](docs/support-policy.md)
 - [Security policy](SECURITY.md)
 - [Modernization plan](MODERNIZATION_PLAN.md)
+- [Java 21 build requirements](docs/building.md)
 
 ## Requirements
 
@@ -269,7 +270,9 @@ Note
 
 To build jGnash you’ll need the following software installed and correctly configured on your system:
 
-OpenJDK 11 or later.
+OpenJDK 21 is required for current development builds. Gradle selects the Java
+21 compiler and test runtime through its toolchain configuration; see the
+[build requirements](docs/building.md) for discovery and troubleshooting.
 
 *If you are building with a recent 64bit Linux system, you may need to enable Multilib/32 Bit support capabilities. Otherwise, the Gradle build may fail when building the windows executables.*
 

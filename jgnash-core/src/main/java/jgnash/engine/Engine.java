@@ -933,7 +933,7 @@ public class Engine {
      *
      * @param node  SecurityNode to add to
      * @param hNode SecurityHistoryNode to add
-     * @return <tt>true</tt> if successful
+     * @return {@code true} if successful
      */
     public boolean addSecurityHistory(@NotNull final SecurityNode node, @NotNull final SecurityHistoryNode hNode) {
         dataLock.writeLock().lock();
@@ -977,7 +977,7 @@ public class Engine {
      *
      * @param node         SecurityNode to add to
      * @param historyEvent SecurityHistoryNode to add
-     * @return <tt>true</tt> if successful
+     * @return {@code true} if successful
      */
     public boolean addSecurityHistoryEvent(@NotNull final SecurityNode node, @NotNull final SecurityHistoryEvent historyEvent) {
         dataLock.writeLock().lock();

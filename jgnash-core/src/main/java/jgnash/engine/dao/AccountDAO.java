@@ -77,8 +77,8 @@ public interface AccountDAO extends DAO {
      * Toggles the visibility of an account given its ID.
      *
      * @param account The account to toggle visibility
-     * @return <tt>true</tt> if the supplied account ID was found
-     *         <tt>false</tt> if the supplied account ID was not found
+     * @return {@code true} if the supplied account ID was found;
+     *         {@code false} if the supplied account ID was not found
      */
     boolean toggleAccountVisibility(final Account account);
 

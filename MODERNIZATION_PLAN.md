@@ -30,6 +30,7 @@ This document is also the authoritative execution ledger. A work item is marked 
 | `BASE-03` | Complete | [`5c7038746`](https://github.com/rainguy/jgnash/commit/5c7038746) | 2026-08-07 | Archived the verified Temurin 11 environment, 345-test result set, nine runtime dependency reports, dependency-update snapshot, and successful legacy distribution fingerprint. |
 | `BASE-05` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added the modernization pull-request scope, compatibility, data-safety, security, validation, rollback, and documentation checklist. |
 | `BUILD-01` | Complete | [`211c8d16e`](https://github.com/rainguy/jgnash/commit/211c8d16e) (Gradle 7 bridge), [`f49a0aaba`](https://github.com/rainguy/jgnash/commit/f49a0aaba) (Gradle 8 target) | 2026-08-07 | Completed the isolated 6.8.2 → 7.6.6 → 8.14.3 path with official wrapper checksums, fatal deprecation gates, public Gradle APIs, explicit JUnit launchers, and successful legacy distribution builds. |
+| `BUILD-02` | Implemented; CI verification pending | [`a85f599c9`](https://github.com/rainguy/jgnash/commit/a85f599c9) | — | Declared Java 21 toolchains and release bytecode, moved CI definitions to Temurin 21, documented discovery, and fixed Java 21 Nashorn, PDF locale-spacing, and Javadoc compatibility. The isolated 345-test suite, Java 17 launcher → Java 21 compiler proof, class-file version 65 check, Javadoc, and distribution build pass. GitHub reported zero checks/runs after the push, so clean hosted-CI acceptance remains open until Actions is enabled for this fork. |
 | `SEC-07` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added private reporting routes, response targets, disclosure rules, and the current remote-mode warning. |
 
 Current milestone: `M0 - Baseline and safety net`
@@ -375,6 +376,8 @@ Status: **Complete** — Gradle 7 bridge commit [`211c8d16e`](https://github.com
   - no unrelated dependency major upgrades are included.
 
 ### BUILD-02: Declare Java toolchains and bytecode target
+
+Status: **Implemented; CI verification pending** — implementation commit [`a85f599c9`](https://github.com/rainguy/jgnash/commit/a85f599c9). Local acceptance evidence passes, but GitHub created no workflow or check run for the pushed commit; enable Actions for the fork and obtain passing Linux, macOS, and Windows runs before changing this status to Complete.
 
 - Add a Java toolchain convention for Java 21 to every Java project.
 - Set `options.release` to 21 for all `JavaCompile` tasks.

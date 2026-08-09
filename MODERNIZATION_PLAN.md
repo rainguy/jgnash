@@ -32,6 +32,7 @@ This document is also the authoritative execution ledger. A work item is marked 
 | `BASE-05` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added the modernization pull-request scope, compatibility, data-safety, security, validation, rollback, and documentation checklist. |
 | `BUILD-01` | Complete | [`211c8d16e`](https://github.com/rainguy/jgnash/commit/211c8d16e) (Gradle 7 bridge), [`f49a0aaba`](https://github.com/rainguy/jgnash/commit/f49a0aaba) (Gradle 8 target) | 2026-08-07 | Completed the isolated 6.8.2 → 7.6.6 → 8.14.3 path with official wrapper checksums, fatal deprecation gates, public Gradle APIs, explicit JUnit launchers, and successful legacy distribution builds. |
 | `BUILD-02` | Implemented; CI verification pending | [`a85f599c9`](https://github.com/rainguy/jgnash/commit/a85f599c9) | — | Declared Java 21 toolchains and release bytecode, moved CI definitions to Temurin 21, documented discovery, and fixed Java 21 Nashorn, PDF locale-spacing, and Javadoc compatibility. The isolated 345-test suite, Java 17 launcher → Java 21 compiler proof, class-file version 65 check, Javadoc, and distribution build pass. GitHub reported zero checks/runs after the push, so clean hosted-CI acceptance remains open until Actions is enabled for this fork. |
+| `BUILD-03` | Complete | [`f0f07d2b0`](https://github.com/rainguy/jgnash/commit/f0f07d2b0) | 2026-08-08 | Added an included `build-logic` convention plugin for Java 21, compilation, Javadoc, JUnit Platform, shared test dependencies, concise test logging, reproducible archives, coordinates, and manifest metadata. All modules apply it explicitly; its warning-clean TestKit functional test is wired into `check`. The full suite and legacy distribution build pass. |
 | `SEC-07` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added private reporting routes, response targets, disclosure rules, and the current remote-mode warning. |
 
 Current milestone: `M1 - Build restored on Java 21`
@@ -394,6 +395,8 @@ Status: **Implemented; CI verification pending** — implementation commit [`a85
   - README documents the toolchain behavior.
 
 ### BUILD-03: Centralize build conventions
+
+Status: **Complete** — implementation commit [`f0f07d2b0`](https://github.com/rainguy/jgnash/commit/f0f07d2b0)
 
 - Create an included `build-logic` build or convention plugins.
 - Centralize:

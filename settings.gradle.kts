@@ -3,6 +3,8 @@ val testFxVersion: String by settings
 val monocleVersion: String by settings
 
 pluginManagement {
+    includeBuild("build-logic")
+
     val javafxPluginVersion: String by settings
     val versionsPluginVersion: String by settings
     val macAppBundleVersion: String by settings

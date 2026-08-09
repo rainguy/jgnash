@@ -5,6 +5,7 @@ val commonsCsvVersion: String by project
 val nashornVersion: String by project
 
 plugins {
+    id("jgnash.java-conventions")
     `java-library`
 }
 

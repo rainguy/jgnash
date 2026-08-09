@@ -9,12 +9,8 @@ val monocleVersion: String by project
 val commonsLangVersion: String by project
 val commonsMathVersion: String by project
 
-val junitVersion: String by project
-val junitPlatformVersion: String by project
-val junitExtensionsVersion: String by project
-val awaitilityVersion: String by project
-
 plugins {
+    id("jgnash.java-conventions")
     application // creates a task to run the full application
     `java-library`
     id("org.openjfx.javafxplugin")
@@ -33,13 +29,6 @@ application {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
-    testImplementation("io.github.glytching:junit-extensions:$junitExtensionsVersion")
-    testImplementation("org.awaitility:awaitility:$awaitilityVersion")
-
     implementation(project(":jgnash-resources"))
     implementation(project(":jgnash-core"))
     implementation(project(":jgnash-convert"))
@@ -95,16 +84,6 @@ javafx {
     version = javaFXVersion
     modules("javafx.base", "javafx.controls", "javafx.fxml", "javafx.web", "javafx.swing",
             "javafx.graphics", "javafx.media")
-}
-
-tasks.test {
-    useJUnitPlatform()
-
-    // we want display the following test events
-    testLogging {
-        events("PASSED", "STARTED", "FAILED", "SKIPPED")
-        showStandardStreams = true
-    }
 }
 
 tasks.startScripts {

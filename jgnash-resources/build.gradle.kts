@@ -1,5 +1,9 @@
 import java.util.*
 
+plugins {
+    id("jgnash.java-conventions")
+}
+
 description = "jGnash Resources"
 
 val moduleName = "jgnash.resources"
@@ -22,6 +26,5 @@ tasks.withType<ProcessResources> {
 tasks.jar {
     manifest.attributes["Automatic-Module-Name"] = moduleName
 }
-
 
 

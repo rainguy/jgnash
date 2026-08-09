@@ -1,3 +1,7 @@
+plugins {
+    id("jgnash.java-conventions")
+}
+
 description = "jGnash Bayes"
 
 val moduleName = "jgnash.bayes"

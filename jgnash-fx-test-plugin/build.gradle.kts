@@ -3,7 +3,8 @@ description = "jGnash Test Plugin"
 val javaFXVersion: String by project    // extract JavaFX version from gradle.properties
 
 plugins {
-  id("org.openjfx.javafxplugin")
+    id("jgnash.java-conventions")
+    id("org.openjfx.javafxplugin")
 }
 
 dependencies {

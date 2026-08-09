@@ -7,6 +7,7 @@ val pdfBoxVersion: String by project
 val commonsLangVersion: String by project
 
 plugins {
+    id("jgnash.java-conventions")
     `java-library`
 }
 

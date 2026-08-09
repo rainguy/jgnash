@@ -4,6 +4,7 @@ val moduleName = "jgnash.plugin"
 val javaFXVersion: String by project    // extract JavaFX version from gradle.properties
 
 plugins {
+    id("jgnash.java-conventions")
     id("org.openjfx.javafxplugin")
 }
 

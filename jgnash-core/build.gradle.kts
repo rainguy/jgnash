@@ -16,6 +16,7 @@ val xstreamVersion: String by project
 val nettyVersion: String by project
 
 plugins {
+    id("jgnash.java-conventions")
     `java-library`
 }
 

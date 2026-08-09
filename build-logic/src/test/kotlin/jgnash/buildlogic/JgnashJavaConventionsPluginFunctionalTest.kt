@@ -60,7 +60,7 @@ class JgnashJavaConventionsPluginFunctionalTest {
 
                 doLast {
                     check(configuredGroup == "jgnash")
-                    check(configuredVersion.toString() == "3.7.1")
+                    check(configuredVersion.toString() == "3.7.2")
                     check(java.toolchain.languageVersion.get().asInt() == 21)
 
                     check(compileJava.get().options.release.get() == 21)
@@ -73,7 +73,7 @@ class JgnashJavaConventionsPluginFunctionalTest {
                     check(jar.get().isReproducibleFileOrder)
                     JarFile(jar.get().archiveFile.get().asFile).use {
                         check(it.manifest.mainAttributes.getValue("Implementation-Title") == "Fixture module")
-                        check(it.manifest.mainAttributes.getValue("Implementation-Version") == "3.7.1")
+                        check(it.manifest.mainAttributes.getValue("Implementation-Version") == "3.7.2")
                     }
 
                     val testDependencies = testRuntimeClasspath.allDependencies

@@ -31,9 +31,11 @@ This document is also the authoritative execution ledger. A work item is marked 
 | `BASE-04` | Complete | [`499c7d06a`](https://github.com/rainguy/jgnash/commit/499c7d06a) | 2026-08-07 | Added 10 valid and five truncated synthetic fixtures spanning all five persistence stores, the three SQL password variants, reviewed semantic summaries, payload hashes with full manifest coverage, and documented generation/provenance. The 20-test catalog suite passes on both Java 21 and the recorded Java 11 baseline; the full Java 21 suite passes with 365 tests and two skips. |
 | `BASE-05` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added the modernization pull-request scope, compatibility, data-safety, security, validation, rollback, and documentation checklist. |
 | `BUILD-01` | Complete | [`211c8d16e`](https://github.com/rainguy/jgnash/commit/211c8d16e) (Gradle 7 bridge), [`f49a0aaba`](https://github.com/rainguy/jgnash/commit/f49a0aaba) (Gradle 8 target) | 2026-08-07 | Completed the isolated 6.8.2 → 7.6.6 → 8.14.3 path with official wrapper checksums, fatal deprecation gates, public Gradle APIs, explicit JUnit launchers, and successful legacy distribution builds. |
-| `BUILD-02` | Implemented; CI verification pending | [`a85f599c9`](https://github.com/rainguy/jgnash/commit/a85f599c9) | — | Declared Java 21 toolchains and release bytecode, moved CI definitions to Temurin 21, documented discovery, and fixed Java 21 Nashorn, PDF locale-spacing, and Javadoc compatibility. The isolated 345-test suite, Java 17 launcher → Java 21 compiler proof, class-file version 65 check, Javadoc, and distribution build pass. GitHub reported zero checks/runs after the push, so clean hosted-CI acceptance remains open until Actions is enabled for this fork. |
+| `BUILD-02` | Complete | [`a85f599c9`](https://github.com/rainguy/jgnash/commit/a85f599c9) | 2026-08-08 | Declared Java 21 toolchains and release bytecode, documented discovery, and fixed Java 21 Nashorn, PDF locale-spacing, and Javadoc compatibility. Local toolchain and bytecode proofs pass; [hosted run 31290582782](https://github.com/rainguy/jgnash/actions/runs/31290582782) validates clean Temurin 21 builds on Ubuntu, Windows, macOS Intel, and macOS Apple Silicon. |
 | `BUILD-03` | Complete | [`f0f07d2b0`](https://github.com/rainguy/jgnash/commit/f0f07d2b0) | 2026-08-08 | Added an included `build-logic` convention plugin for Java 21, compilation, Javadoc, JUnit Platform, shared test dependencies, concise test logging, reproducible archives, coordinates, and manifest metadata. All modules apply it explicitly; its warning-clean TestKit functional test is wired into `check`. The full suite and legacy distribution build pass. |
 | `BUILD-04` | Complete | [`b16130cf2`](https://github.com/rainguy/jgnash/commit/b16130cf2) | 2026-08-08 | Moved every production library and external plugin version to `gradle/libs.versions.toml`, documented compatibility pins, shared the catalog with `build-logic`, converted JavaFX platform classifiers to catalog variants, and removed `gradle.properties`. Updated the dependency-report plugin to its current stable ID and version; catalog-aware update reporting, a clean full check, and the legacy distribution build pass with fatal Gradle deprecation handling. |
+| `CI-01` | Complete | [`0df7d686b`](https://github.com/rainguy/jgnash/commit/0df7d686b), [`2bef88df2`](https://github.com/rainguy/jgnash/commit/2bef88df2), [`73ec99a11`](https://github.com/rainguy/jgnash/commit/73ec99a11), [`ec5ce8c51`](https://github.com/rainguy/jgnash/commit/ec5ce8c51), [`d58232890`](https://github.com/rainguy/jgnash/commit/d58232890) | 2026-08-08 | Replaced duplicated workflows with one least-privilege, concurrency-controlled matrix for pushes, pull requests, and manual runs. Actions use reviewed full SHAs, failed tests upload reports, fixture behavior is deterministic across hosts, and [run 31290582782](https://github.com/rainguy/jgnash/actions/runs/31290582782) passes on all four required OS/architecture targets. |
+| `CI-02` | Complete | [`0df7d686b`](https://github.com/rainguy/jgnash/commit/0df7d686b) | 2026-08-08 | Replaced obsolete wrapper validation with the maintained Gradle action pinned to a reviewed full SHA. It runs for pull requests, pushes, and manual dispatch; [run 31290582782](https://github.com/rainguy/jgnash/actions/runs/31290582782) passed wrapper validation. |
 | `DEP-02` | Partially implemented | [`f31311aec`](https://github.com/rainguy/jgnash/commit/f31311aec) | — | Updated JUnit 5, JUnit Platform, Awaitility, TestFX, Monocle, and junit-extensions on Java 21-compatible lines. The clean suite passes with 359 tests and two expected network skips; BOM adoption and the junit-extensions removal assessment remain open. |
 | `DEP-03` | Partially implemented | [`f31311aec`](https://github.com/rainguy/jgnash/commit/f31311aec) | — | Updated Picocli, Nashorn, and Apache Commons Lang, CSV, Collections, and Text. Compilation and the complete suite pass; focused CSV behavior fixtures and dependency-removal review remain open. |
 | `DEP-05` | Partially implemented | [`f31311aec`](https://github.com/rainguy/jgnash/commit/f31311aec) | — | Updated POI to 5.5.1 and PDFBox on the compatible 2.0 line to 2.0.37. Existing spreadsheet semantic and PDF raster tests pass; representative office-application validation and the separate PDFBox 3 migration remain open. |
@@ -42,10 +44,11 @@ This document is also the authoritative execution ledger. A work item is marked 
 | `DEP-08` | Partially implemented | [`f31311aec`](https://github.com/rainguy/jgnash/commit/f31311aec) | — | Updated JavaFX to the 21.0.12 line and aligned TestFX/Monocle compatibility dependencies. Automated JavaFX tests and the Linux distribution pass; the Windows/macOS native matrix, packaged smoke tests, and visual/accessibility review remain open. |
 | `SEC-07` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added private reporting routes, response targets, disclosure rules, and the current remote-mode warning. |
 
-Current milestone: `M1 - Build restored on Java 21`
+Current milestone: `M2 - Modern CI and dependency hygiene`
 
 - `M0 - Baseline and safety net` is complete; all five `BASE` work items have accepted implementation commits.
-- `BUILD-02` is implemented and locally validated, but hosted-CI acceptance remains pending because this fork has not created GitHub Actions runs.
+- `M1 - Build restored on Java 21` is complete; BUILD-01 through BUILD-04 have accepted implementation and validation evidence.
+- `CI-01` and `CI-02` establish the cross-platform hosted safety net for the remaining M2 work.
 
 ## 2. Current repository baseline
 
@@ -388,7 +391,7 @@ Status: **Complete** — Gradle 7 bridge commit [`211c8d16e`](https://github.com
 
 ### BUILD-02: Declare Java toolchains and bytecode target
 
-Status: **Implemented; CI verification pending** — implementation commit [`a85f599c9`](https://github.com/rainguy/jgnash/commit/a85f599c9). Local acceptance evidence passes, but GitHub created no workflow or check run for the pushed commit; enable Actions for the fork and obtain passing Linux, macOS, and Windows runs before changing this status to Complete.
+Status: **Complete** — implementation commit [`a85f599c9`](https://github.com/rainguy/jgnash/commit/a85f599c9); clean hosted acceptance on Ubuntu, Windows, macOS Intel, and macOS Apple Silicon in [run 31290582782](https://github.com/rainguy/jgnash/actions/runs/31290582782).
 
 - Add a Java toolchain convention for Java 21 to every Java project.
 - Set `options.release` to 21 for all `JavaCompile` tasks.
@@ -489,6 +492,8 @@ Status: **Complete** — implementation commit [`b16130cf2`](https://github.com/
 
 ### CI-01: Replace duplicated CI with a matrix workflow
 
+Status: **Complete** — primary implementation commit [`0df7d686b`](https://github.com/rainguy/jgnash/commit/0df7d686b), with cross-platform reliability hardening through [`d58232890`](https://github.com/rainguy/jgnash/commit/d58232890); all required jobs pass in [run 31290582782](https://github.com/rainguy/jgnash/actions/runs/31290582782).
+
 - Create one primary CI workflow with a matrix for:
   - Ubuntu x64;
   - Windows x64;
@@ -509,6 +514,8 @@ Status: **Complete** — implementation commit [`b16130cf2`](https://github.com/
   - platform-specific failures remain independently visible.
 
 ### CI-02: Modernize wrapper validation
+
+Status: **Complete** — implementation commit [`0df7d686b`](https://github.com/rainguy/jgnash/commit/0df7d686b); wrapper validation passes in [run 31290582782](https://github.com/rainguy/jgnash/actions/runs/31290582782).
 
 - Replace the obsolete wrapper validation action with the maintained Gradle action.
 - Pin it to a reviewed commit SHA.

@@ -20,7 +20,7 @@ class JgnashJavaConventionsPlugin : Plugin<Project> {
             pluginManager.apply("java")
 
             group = "jgnash"
-            version = "3.7.1"
+            version = "3.7.2"
 
             val javaVersion = JavaLanguageVersion.of(21)
             extensions.getByType(JavaPluginExtension::class.java).toolchain.languageVersion.set(javaVersion)

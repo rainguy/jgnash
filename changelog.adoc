@@ -18,6 +18,11 @@
 * Reinstate archive capability
 * Open zipped backups instead of manually unzipping.
 
+== Release 3.7.2
+* 08/08/2026 Fixed an autocomplete initialization race that could prevent the JavaFX interface from starting.
+* 08/08/2026 Fixed HSQLDB file handles remaining open after a failed password attempt.
+* 08/08/2026 Added reproducible cross-platform verification for Linux, Windows, macOS Intel, and Apple Silicon.
+
 == Release 3.7.1
 * 08/08/2026 Fixed the bootloader downloading JavaFX 15 instead of the JavaFX 21 runtime used by the application.
 

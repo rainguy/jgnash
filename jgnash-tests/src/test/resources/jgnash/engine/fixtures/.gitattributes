@@ -2,3 +2,6 @@
 *.bxds binary
 *.db binary
 *.script binary
+*.properties text eol=lf
+*.txt text eol=lf
+*.xml text eol=lf

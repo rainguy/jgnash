@@ -24,8 +24,12 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 
 import jgnash.engine.DataStoreType;
+import jgnash.engine.Engine;
 import jgnash.util.FileUtils;
 import jgnash.util.NotNull;
+import org.hsqldb.Database;
+import org.hsqldb.DatabaseManager;
+import org.hsqldb.DatabaseType;
 
 /**
  * JPA specific code for HSQLDB data storage and creating an engine.
@@ -38,8 +42,29 @@ public class JpaHsqlDataStore extends AbstractJpaDataStore {
 
     public static final String LOCK_EXT = ".lck";
 
+    private static final long LOCK_RELEASE_TIMEOUT = 30L * 1000L;
+
     private static final String[] extensions = new String[]{".log", ".properties", FILE_EXT, ".data", ".backup",
             ".tmp", ".lobs", LOCK_EXT};
+
+    @Override
+    public Engine getLocalEngine(final String fileName, final String engineName, final char[] password) {
+        final Engine engine = super.getLocalEngine(fileName, engineName, password);
+
+        if (engine == null) {
+            // Failed authentication can leave HSQLDB background resources and file handles open.
+            final String databasePath = FileUtils.stripFileExtension(fileName);
+            final Database database = DatabaseManager.lookupDatabaseObject(DatabaseType.DB_FILE, databasePath);
+            if (database != null) {
+                database.close(Database.CLOSEMODE_IMMEDIATELY);
+            }
+            if (!FileUtils.waitForFileRemoval(databasePath + LOCK_EXT, LOCK_RELEASE_TIMEOUT)) {
+                logger.warning("Timed out waiting for the failed HSQLDB connection to release its lock");
+            }
+        }
+
+        return engine;
+    }
 
     @NotNull
     @Override

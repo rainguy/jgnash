@@ -40,6 +40,7 @@ import jgnash.engine.DataStoreType;
 import jgnash.engine.Engine;
 import jgnash.engine.EngineFactory;
 import jgnash.util.FileMagic;
+import jgnash.util.FileUtils;
 
 /** Regression tests for the checked-in synthetic persistence catalog. */
 class DataFormatFixtureCatalogTest {
@@ -82,6 +83,10 @@ class DataFormatFixtureCatalogTest {
                         EngineFactory.closeEngine(EngineFactory.DEFAULT);
                     }
                     assertNull(engine, "Password-protected fixture accepted an incorrect password");
+                    if (DataStoreType.HSQL_DATABASE.name().equals(value(catalog, id, "dataStoreType"))) {
+                        assertFalse(Files.exists(Path.of(FileUtils.stripFileExtension(copiedFile.toString())
+                                + ".lck")), "Failed HSQLDB authentication retained its database lock");
+                    }
                 }));
     }
 

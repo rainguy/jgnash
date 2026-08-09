@@ -495,7 +495,7 @@ public interface OfxTags {
     String CURSYM = "CURSYM";
 
     /**
-     * Ratio of <CURDEF> currency to <CURSYM> currency, in decimal notation, rate
+     * Ratio of {@code <CURDEF>} currency to {@code <CURSYM>} currency, in decimal notation, rate
      */
     String CURRATE = "CURRATE";
 

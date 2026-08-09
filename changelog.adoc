@@ -18,6 +18,12 @@
 * Reinstate archive capability
 * Open zipped backups instead of manually unzipping.
 
+== Release 3.7.0
+* 08/08/2026 Updated the build and runtime baseline to Java 21.
+* 08/08/2026 Centralized build conventions and dependency versions.
+* 08/08/2026 Updated JavaFX, test, utility, serialization, document, and networking dependencies on compatible release lines.
+* 08/08/2026 Fixed a race while waiting for database lock files to be removed.
+
 == Release 3.6.0 __(File format change)__
 * 02/21/2021 Fixed an issue with the JVM returning a negative scale for some locales (GitHub Pull Request #95) _[t-pa]_
 * 02/21/2021 Updated to the latest dependencies.

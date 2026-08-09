@@ -108,7 +108,7 @@ class FileUtilsTest {
 
         Path tempFile2 = Files.createTempFile("temp", null);
 
-        try (final Writer writer = Files.newBufferedWriter(tempFile)) {
+        try (final Writer writer = Files.newBufferedWriter(tempFile2)) {
             writer.write("test");
         } catch (Exception e) {
             fail();

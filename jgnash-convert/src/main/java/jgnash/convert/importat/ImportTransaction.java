@@ -378,7 +378,7 @@ public class ImportTransaction implements Comparable<ImportTransaction> {
     /**
      * Some OFX based systems will assign an ID to a Payee.
      * <p>
-     * The ID would correspond to a Payee List identified by <PAYEELSTID> (not implemented)
+     * The ID would correspond to a Payee List identified by {@code <PAYEELSTID>} (not implemented)
      */
     public String getPayeeId() {
         return payeeId;
@@ -391,7 +391,7 @@ public class ImportTransaction implements Comparable<ImportTransaction> {
     /**
      * The sub-account for cash transfer, typically CASH, but could be MARGIN, SHORT, or OTHER
      * <p>
-     * <SUBACCTFROM>, <SUBACCTFUND>, <SUBACCTSEC>, <SUBACCTTO>
+     * {@code <SUBACCTFROM>}, {@code <SUBACCTFUND>}, {@code <SUBACCTSEC>}, {@code <SUBACCTTO>}
      */
     public String getSubAccount() {
         return subAccount;

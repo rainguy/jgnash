@@ -38,8 +38,6 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -392,27 +390,32 @@ public final class FileUtils {
      * @return true if the file existed and was removed
      */
     public static boolean waitForFileRemoval(final String fileName, final long timeout) {
-        boolean result = false;
-
-        final LocalDateTime start = LocalDateTime.now();
-
         if (fileName != null && Files.exists(Paths.get(fileName))) {
             final Path filePath = Paths.get(fileName);
+            final long deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(timeout);
 
             try (final WatchService watchService = FileSystems.getDefault().newWatchService()) {
                 filePath.getParent().register(watchService, StandardWatchEventKinds.ENTRY_DELETE);
 
-                while (Duration.between(start, LocalDateTime.now()).toMillis() < timeout) {
-                    final WatchKey watchKey = watchService.poll(timeout, TimeUnit.MILLISECONDS);
+                // The file may disappear between the initial check and watch registration.
+                if (!Files.exists(filePath)) {
+                    return true;
+                }
+
+                long remainingNanos;
+                while ((remainingNanos = deadline - System.nanoTime()) > 0) {
+                    final WatchKey watchKey = watchService.poll(remainingNanos, TimeUnit.NANOSECONDS);
 
                     if (watchKey != null) {
                         for (final WatchEvent<?> ignored : watchKey.pollEvents()) {
                             if (!Files.exists(filePath)) {
                                 Logger.getLogger(FileUtils.class.getName()).info(fileName + " was removed");
-                                result = true;
-                                break;
+                                return true;
                             }
                         }
+                        watchKey.reset();
+                    } else {
+                        break;
                     }
                 }
             } catch (final IOException e) {
@@ -422,14 +425,15 @@ public final class FileUtils {
                 Thread.currentThread().interrupt();
             }
         } else {
-            result = true;  // lock file was already gone
+            return true;  // lock file was already gone
         }
 
-        // Last check for file existence.  File removal could have occurred before watch service started
-        if (!result && Files.exists(Paths.get(fileName))) {
-            Logger.getLogger(FileUtils.class.getName()).info("Timed out waiting for removal of: " + fileName);
+        // File removal could occur just as the timeout expires.
+        if (!Files.exists(Paths.get(fileName))) {
+            return true;
         }
 
-        return result;
+        Logger.getLogger(FileUtils.class.getName()).info("Timed out waiting for removal of: " + fileName);
+        return false;
     }
 }

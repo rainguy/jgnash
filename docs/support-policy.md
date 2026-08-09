@@ -2,7 +2,7 @@
 
 Status: active during modernization
 
-Last reviewed: 2026-08-07
+Last reviewed: 2026-08-08
 
 This policy defines what the jGnash project intends to support while the modernization roadmap in [`MODERNIZATION_PLAN.md`](../MODERNIZATION_PLAN.md) is being executed. It distinguishes current repository behavior from targets that are not yet delivered.
 
@@ -10,7 +10,7 @@ This policy defines what the jGnash project intends to support while the moderni
 
 | Release line | Status | Scope |
 |---|---|---|
-| Current `master` / 3.6 development line | Maintenance and migration source | Correctness, data recovery, and modernization work are accepted. The branch is not yet the modernized stable release. |
+| Current `master` / 3.7 development line | Maintenance and migration source | Correctness, data recovery, and modernization work are accepted. The branch is not yet the modernized stable release. |
 | Last published legacy release | Migration support only | Existing user data must remain recoverable through a documented migration path. General dependency and platform updates are not promised. |
 | Future Java 21 modernized release | Planned supported line | Becomes supported only after the release gates in `MODERNIZATION_PLAN.md` pass. |
 | Older releases | Unsupported | Users should migrate through a supported intermediate release when direct migration is unavailable. |

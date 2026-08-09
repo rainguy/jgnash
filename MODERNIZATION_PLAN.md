@@ -33,6 +33,7 @@ This document is also the authoritative execution ledger. A work item is marked 
 | `BUILD-01` | Complete | [`211c8d16e`](https://github.com/rainguy/jgnash/commit/211c8d16e) (Gradle 7 bridge), [`f49a0aaba`](https://github.com/rainguy/jgnash/commit/f49a0aaba) (Gradle 8 target) | 2026-08-07 | Completed the isolated 6.8.2 → 7.6.6 → 8.14.3 path with official wrapper checksums, fatal deprecation gates, public Gradle APIs, explicit JUnit launchers, and successful legacy distribution builds. |
 | `BUILD-02` | Implemented; CI verification pending | [`a85f599c9`](https://github.com/rainguy/jgnash/commit/a85f599c9) | — | Declared Java 21 toolchains and release bytecode, moved CI definitions to Temurin 21, documented discovery, and fixed Java 21 Nashorn, PDF locale-spacing, and Javadoc compatibility. The isolated 345-test suite, Java 17 launcher → Java 21 compiler proof, class-file version 65 check, Javadoc, and distribution build pass. GitHub reported zero checks/runs after the push, so clean hosted-CI acceptance remains open until Actions is enabled for this fork. |
 | `BUILD-03` | Complete | [`f0f07d2b0`](https://github.com/rainguy/jgnash/commit/f0f07d2b0) | 2026-08-08 | Added an included `build-logic` convention plugin for Java 21, compilation, Javadoc, JUnit Platform, shared test dependencies, concise test logging, reproducible archives, coordinates, and manifest metadata. All modules apply it explicitly; its warning-clean TestKit functional test is wired into `check`. The full suite and legacy distribution build pass. |
+| `BUILD-04` | Complete | [`b16130cf2`](https://github.com/rainguy/jgnash/commit/b16130cf2) | 2026-08-08 | Moved every production library and external plugin version to `gradle/libs.versions.toml`, documented compatibility pins, shared the catalog with `build-logic`, converted JavaFX platform classifiers to catalog variants, and removed `gradle.properties`. Updated the dependency-report plugin to its current stable ID and version; catalog-aware update reporting, a clean full check, and the legacy distribution build pass with fatal Gradle deprecation handling. |
 | `SEC-07` | Complete | [`4c4707d56`](https://github.com/rainguy/jgnash/commit/4c4707d56) | 2026-08-07 | Added private reporting routes, response targets, disclosure rules, and the current remote-mode warning. |
 
 Current milestone: `M1 - Build restored on Java 21`
@@ -416,6 +417,8 @@ Status: **Complete** — implementation commit [`f0f07d2b0`](https://github.com/
   - module boundaries remain unchanged in this issue.
 
 ### BUILD-04: Introduce a version catalog
+
+Status: **Complete** — implementation commit [`b16130cf2`](https://github.com/rainguy/jgnash/commit/b16130cf2)
 
 - Move library and plugin versions to `gradle/libs.versions.toml`.
 - Use bundles only where the dependency set is genuinely cohesive.

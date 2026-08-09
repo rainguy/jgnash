@@ -2,10 +2,6 @@ description = "jGnash Report Core"
 
 val moduleName = "jgnash.report"
 
-val apachePoiVersion: String by project
-val pdfBoxVersion: String by project
-val commonsLangVersion: String by project
-
 plugins {
     id("jgnash.java-conventions")
     `java-library`
@@ -15,14 +11,14 @@ dependencies {
     implementation(project(":jgnash-resources"))
     implementation(project(":jgnash-core"))
 
-    implementation("org.apache.poi:poi-ooxml:$apachePoiVersion") {
+    implementation(libs.apache.poi) {
         exclude(module = "stax-api")
         exclude(module = "xml-apis")
     }
 
-    implementation("org.apache.pdfbox:pdfbox:$pdfBoxVersion")
-    implementation("org.apache.pdfbox:pdfbox-tools:$pdfBoxVersion")
-    implementation("org.apache.commons:commons-lang3:$commonsLangVersion")
+    implementation(libs.pdfbox)
+    implementation(libs.pdfbox.tools)
+    implementation(libs.commons.lang)
 }
 
 tasks.jar {

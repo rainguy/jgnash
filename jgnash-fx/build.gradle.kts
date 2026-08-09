@@ -2,19 +2,12 @@ import edu.sc.seis.macAppBundle.MacAppBundlePluginExtension
 
 description = "jGnash"
 
-val javaFXVersion: String by project    // extract JavaFX version from gradle.properties
-val picocliVersion: String by project
-val testFxVersion: String by project
-val monocleVersion: String by project
-val commonsLangVersion: String by project
-val commonsMathVersion: String by project
-
 plugins {
     id("jgnash.java-conventions")
     application // creates a task to run the full application
     `java-library`
-    id("org.openjfx.javafxplugin")
-    id("edu.sc.seis.macAppBundle") apply false
+    alias(libs.plugins.javafx)
+    alias(libs.plugins.mac.app.bundle) apply false
 }
 
 val legacyMacPackagingRequested = gradle.startParameter.taskNames.any {
@@ -35,53 +28,47 @@ dependencies {
     implementation(project(":jgnash-report-core"))
     implementation(project(":jgnash-plugin"))
 
-    implementation("info.picocli:picocli:$picocliVersion")
+    implementation(libs.picocli)
 
-    implementation("org.apache.commons:commons-lang3:$commonsLangVersion")
-    implementation("org.apache.commons:commons-math3:$commonsMathVersion")
+    implementation(libs.commons.lang)
+    implementation(libs.commons.math)
 
     // Hack to include all javafx platforms in the classpath
     // The platform specific libraries are excluded when the distribution is assembled
-    implementation("org.openjfx:javafx-base:$javaFXVersion")
-    implementation("org.openjfx:javafx-fxml:$javaFXVersion")
-    implementation("org.openjfx:javafx-controls:$javaFXVersion")
-    implementation("org.openjfx:javafx-graphics:$javaFXVersion")
-    implementation("org.openjfx:javafx-media:$javaFXVersion")
-    implementation("org.openjfx:javafx-swing:$javaFXVersion")
-    implementation("org.openjfx:javafx-web:$javaFXVersion")
+    implementation(libs.bundles.javafx)
 
-    runtimeOnly("org.openjfx:javafx-base:$javaFXVersion:linux")
-    runtimeOnly("org.openjfx:javafx-fxml:$javaFXVersion:linux")
-    runtimeOnly("org.openjfx:javafx-controls:$javaFXVersion:linux")
-    runtimeOnly("org.openjfx:javafx-graphics:$javaFXVersion:linux")
-    runtimeOnly("org.openjfx:javafx-media:$javaFXVersion:linux")
-    runtimeOnly("org.openjfx:javafx-swing:$javaFXVersion:linux")
-    runtimeOnly("org.openjfx:javafx-web:$javaFXVersion:linux")
+    runtimeOnly(variantOf(libs.javafx.base) { classifier("linux") })
+    runtimeOnly(variantOf(libs.javafx.fxml) { classifier("linux") })
+    runtimeOnly(variantOf(libs.javafx.controls) { classifier("linux") })
+    runtimeOnly(variantOf(libs.javafx.graphics) { classifier("linux") })
+    runtimeOnly(variantOf(libs.javafx.media) { classifier("linux") })
+    runtimeOnly(variantOf(libs.javafx.swing) { classifier("linux") })
+    runtimeOnly(variantOf(libs.javafx.web) { classifier("linux") })
 
-    runtimeOnly("org.openjfx:javafx-base:$javaFXVersion:win")
-    runtimeOnly("org.openjfx:javafx-fxml:$javaFXVersion:win")
-    runtimeOnly("org.openjfx:javafx-controls:$javaFXVersion:win")
-    runtimeOnly("org.openjfx:javafx-graphics:$javaFXVersion:win")
-    runtimeOnly("org.openjfx:javafx-media:$javaFXVersion:win")
-    runtimeOnly("org.openjfx:javafx-swing:$javaFXVersion:win")
-    runtimeOnly("org.openjfx:javafx-web:$javaFXVersion:win")
+    runtimeOnly(variantOf(libs.javafx.base) { classifier("win") })
+    runtimeOnly(variantOf(libs.javafx.fxml) { classifier("win") })
+    runtimeOnly(variantOf(libs.javafx.controls) { classifier("win") })
+    runtimeOnly(variantOf(libs.javafx.graphics) { classifier("win") })
+    runtimeOnly(variantOf(libs.javafx.media) { classifier("win") })
+    runtimeOnly(variantOf(libs.javafx.swing) { classifier("win") })
+    runtimeOnly(variantOf(libs.javafx.web) { classifier("win") })
 
-    runtimeOnly("org.openjfx:javafx-base:$javaFXVersion:mac")
-    runtimeOnly("org.openjfx:javafx-fxml:$javaFXVersion:mac")
-    runtimeOnly("org.openjfx:javafx-controls:$javaFXVersion:mac")
-    runtimeOnly("org.openjfx:javafx-graphics:$javaFXVersion:mac")
-    runtimeOnly("org.openjfx:javafx-media:$javaFXVersion:mac")
-    runtimeOnly("org.openjfx:javafx-swing:$javaFXVersion:mac")
-    runtimeOnly("org.openjfx:javafx-web:$javaFXVersion:mac")
+    runtimeOnly(variantOf(libs.javafx.base) { classifier("mac") })
+    runtimeOnly(variantOf(libs.javafx.fxml) { classifier("mac") })
+    runtimeOnly(variantOf(libs.javafx.controls) { classifier("mac") })
+    runtimeOnly(variantOf(libs.javafx.graphics) { classifier("mac") })
+    runtimeOnly(variantOf(libs.javafx.media) { classifier("mac") })
+    runtimeOnly(variantOf(libs.javafx.swing) { classifier("mac") })
+    runtimeOnly(variantOf(libs.javafx.web) { classifier("mac") })
     // end hack
 
     // required of Unit testing JavaFX
-    testImplementation("org.testfx:testfx-junit5:$testFxVersion")
-    testImplementation("org.testfx:openjfx-monocle:$monocleVersion")
+    testImplementation(libs.testfx.junit5)
+    testImplementation(libs.testfx.monocle)
 }
 
 javafx {
-    version = javaFXVersion
+    version = libs.versions.javafx.get()
     modules("javafx.base", "javafx.controls", "javafx.fxml", "javafx.web", "javafx.swing",
             "javafx.graphics", "javafx.media")
 }

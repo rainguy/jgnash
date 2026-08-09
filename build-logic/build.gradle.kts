@@ -13,8 +13,8 @@ gradlePlugin {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.7.1")
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 tasks.test {

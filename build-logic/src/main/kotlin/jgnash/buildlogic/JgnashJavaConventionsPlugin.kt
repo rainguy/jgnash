@@ -3,6 +3,7 @@ package jgnash.buildlogic
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.bundling.AbstractArchiveTask
 import org.gradle.api.tasks.bundling.Jar
@@ -89,30 +90,28 @@ class JgnashJavaConventionsPlugin : Plugin<Project> {
                 )
             }
 
+            val libraries = extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
             dependencies.add(
                 "testImplementation",
-                propertyDependency("junitVersion", "org.junit.jupiter:junit-jupiter-api")
+                libraries.findLibrary("junit-jupiter-api").get()
             )
             dependencies.add(
                 "testImplementation",
-                propertyDependency("junitVersion", "org.junit.jupiter:junit-jupiter-params")
+                libraries.findLibrary("junit-jupiter-params").get()
             )
             dependencies.add(
                 "testRuntimeOnly",
-                propertyDependency("junitVersion", "org.junit.jupiter:junit-jupiter-engine")
+                libraries.findLibrary("junit-jupiter-engine").get()
             )
             dependencies.add(
                 "testRuntimeOnly",
-                propertyDependency("junitPlatformVersion", "org.junit.platform:junit-platform-launcher")
+                libraries.findLibrary("junit-platform-launcher").get()
             )
             dependencies.add(
                 "testImplementation",
-                propertyDependency("junitExtensionsVersion", "io.github.glytching:junit-extensions")
+                libraries.findLibrary("junit-extensions").get()
             )
-            dependencies.add("testImplementation", propertyDependency("awaitilityVersion", "org.awaitility:awaitility"))
+            dependencies.add("testImplementation", libraries.findLibrary("awaitility").get())
         }
     }
-
-    private fun Project.propertyDependency(propertyName: String, coordinates: String): String =
-        "$coordinates:${providers.gradleProperty(propertyName).get()}"
 }

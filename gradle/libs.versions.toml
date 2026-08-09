@@ -1,0 +1,86 @@
+[versions]
+plugin-javafx = "0.1.0"
+# Current stable line used for Gradle 8 catalog-aware reports.
+plugin-dependency-updates = "0.60.0"
+plugin-mac-app-bundle = "2.3.0"
+
+javafx = "15.0.1"
+# Legacy JavaFX test compatibility pins; upgrade together in DEP-02 and DEP-08.
+testfx = "4.0.16-alpha"
+monocle = "jdk-12.0.1+2"
+
+junit = "5.7.1"
+junit-platform = "1.7.1"
+junit-extensions = "2.4.0"
+awaitility = "4.0.3"
+
+commons-lang = "3.11"
+commons-math = "3.6.1"
+commons-csv = "1.8"
+commons-collections = "4.4"
+commons-text = "1.9"
+nashorn = "15.4"
+picocli = "4.6.1"
+apache-poi = "5.0.0"
+
+# Persistence and serialization compatibility pins; upgrade only with migration fixtures.
+h2 = "1.4.200"
+hsqldb = "2.5.1"
+xstream = "1.4.15"
+hibernate = "5.4.28.Final"
+hikari = "4.0.2"
+
+pdfbox = "2.0.22"
+netty = "4.1.59.Final"
+# Existing modular logging compatibility pin; replace as one lane in DEP-04.
+slf4j = "1.8.0-beta4"
+
+[libraries]
+javafx-base = { module = "org.openjfx:javafx-base", version.ref = "javafx" }
+javafx-fxml = { module = "org.openjfx:javafx-fxml", version.ref = "javafx" }
+javafx-controls = { module = "org.openjfx:javafx-controls", version.ref = "javafx" }
+javafx-graphics = { module = "org.openjfx:javafx-graphics", version.ref = "javafx" }
+javafx-media = { module = "org.openjfx:javafx-media", version.ref = "javafx" }
+javafx-swing = { module = "org.openjfx:javafx-swing", version.ref = "javafx" }
+javafx-web = { module = "org.openjfx:javafx-web", version.ref = "javafx" }
+
+testfx-junit5 = { module = "org.testfx:testfx-junit5", version.ref = "testfx" }
+testfx-monocle = { module = "org.testfx:openjfx-monocle", version.ref = "monocle" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
+junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
+junit-extensions = { module = "io.github.glytching:junit-extensions", version.ref = "junit-extensions" }
+awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitility" }
+
+commons-lang = { module = "org.apache.commons:commons-lang3", version.ref = "commons-lang" }
+commons-math = { module = "org.apache.commons:commons-math3", version.ref = "commons-math" }
+commons-csv = { module = "org.apache.commons:commons-csv", version.ref = "commons-csv" }
+commons-collections = { module = "org.apache.commons:commons-collections4", version.ref = "commons-collections" }
+commons-text = { module = "org.apache.commons:commons-text", version.ref = "commons-text" }
+nashorn = { module = "org.openjdk.nashorn:nashorn-core", version.ref = "nashorn" }
+picocli = { module = "info.picocli:picocli", version.ref = "picocli" }
+apache-poi = { module = "org.apache.poi:poi-ooxml", version.ref = "apache-poi" }
+
+h2 = { module = "com.h2database:h2", version.ref = "h2" }
+hsqldb = { module = "org.hsqldb:hsqldb", version.ref = "hsqldb" }
+xstream = { module = "com.thoughtworks.xstream:xstream", version.ref = "xstream" }
+xstream-hibernate = { module = "com.thoughtworks.xstream:xstream-hibernate", version.ref = "xstream" }
+hibernate-entitymanager = { module = "org.hibernate:hibernate-entitymanager", version.ref = "hibernate" }
+hibernate-hikaricp = { module = "org.hibernate:hibernate-hikaricp", version.ref = "hibernate" }
+hikari = { module = "com.zaxxer:HikariCP", version.ref = "hikari" }
+
+pdfbox = { module = "org.apache.pdfbox:pdfbox", version.ref = "pdfbox" }
+pdfbox-tools = { module = "org.apache.pdfbox:pdfbox-tools", version.ref = "pdfbox" }
+netty-codec = { module = "io.netty:netty-codec", version.ref = "netty" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+slf4j-jdk14 = { module = "org.slf4j:slf4j-jdk14", version.ref = "slf4j" }
+
+[bundles]
+javafx = ["javafx-base", "javafx-fxml", "javafx-controls", "javafx-graphics", "javafx-media", "javafx-swing", "javafx-web"]
+
+[plugins]
+javafx = { id = "org.openjfx.javafxplugin", version.ref = "plugin-javafx" }
+dependency-updates = { id = "io.github.ben-manes.versions", version.ref = "plugin-dependency-updates" }
+mac-app-bundle = { id = "edu.sc.seis.macAppBundle", version.ref = "plugin-mac-app-bundle" }

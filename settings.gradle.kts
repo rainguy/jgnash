@@ -1,19 +1,5 @@
-// extract plugin versions from gradle.properties
-val testFxVersion: String by settings
-val monocleVersion: String by settings
-
 pluginManagement {
     includeBuild("build-logic")
-
-    val javafxPluginVersion: String by settings
-    val versionsPluginVersion: String by settings
-    val macAppBundleVersion: String by settings
-
-    plugins {
-        id("org.openjfx.javafxplugin") version javafxPluginVersion
-        id ("com.github.ben-manes.versions") version versionsPluginVersion
-        id("edu.sc.seis.macAppBundle") version macAppBundleVersion
-    }
 }
 
 rootProject.name = "jgnash"

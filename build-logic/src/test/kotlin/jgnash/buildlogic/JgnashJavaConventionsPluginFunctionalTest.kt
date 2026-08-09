@@ -13,13 +13,23 @@ class JgnashJavaConventionsPluginFunctionalTest {
     @Test
     fun `configures a Java project consistently`() {
         Files.writeString(projectDirectory.resolve("settings.gradle.kts"), "rootProject.name = \"fixture\"\n")
+        Files.createDirectories(projectDirectory.resolve("gradle"))
         Files.writeString(
-            projectDirectory.resolve("gradle.properties"),
+            projectDirectory.resolve("gradle/libs.versions.toml"),
             """
-            junitVersion=5.7.1
-            junitPlatformVersion=1.7.1
-            junitExtensionsVersion=2.4.0
-            awaitilityVersion=4.0.3
+            [versions]
+            junit = "5.7.1"
+            junit-platform = "1.7.1"
+            junit-extensions = "2.4.0"
+            awaitility = "4.0.3"
+
+            [libraries]
+            junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
+            junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit" }
+            junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
+            junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
+            junit-extensions = { module = "io.github.glytching:junit-extensions", version.ref = "junit-extensions" }
+            awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitility" }
             """.trimIndent()
         )
         Files.writeString(

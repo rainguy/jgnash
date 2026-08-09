@@ -1,5 +1,5 @@
 plugins {
-    id("com.github.ben-manes.versions")
+    alias(libs.plugins.dependency.updates)
     id("jgnash.java-conventions")
 }
 

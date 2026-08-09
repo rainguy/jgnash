@@ -1,10 +1,8 @@
 description = "mt940 Plugin"
 
-val javaFXVersion: String by project    // extract JavaFX version from gradle.properties
-
 plugins {
     id("jgnash.java-conventions")
-    id("org.openjfx.javafxplugin")
+    alias(libs.plugins.javafx)
 }
 
 dependencies {
@@ -16,7 +14,7 @@ dependencies {
 }
 
 javafx {
-    version = javaFXVersion
+    version = libs.versions.javafx.get()
     modules("javafx.controls")
 }
 

@@ -1,8 +1,6 @@
 description = "jGnash Convert"
 
 val moduleName = "jgnash.convert"
-val commonsCsvVersion: String by project
-val nashornVersion: String by project
 
 plugins {
     id("jgnash.java-conventions")
@@ -14,8 +12,8 @@ dependencies {
     implementation(project(":jgnash-core"))
     implementation(project(":jgnash-bayes"))
 
-    implementation("org.apache.commons:commons-csv:$commonsCsvVersion")
-    implementation("org.openjdk.nashorn:nashorn-core:$nashornVersion")
+    implementation(libs.commons.csv)
+    implementation(libs.nashorn)
 }
 
 tasks.jar {

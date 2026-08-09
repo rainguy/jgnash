@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -41,6 +42,7 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.Properties;
 import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 import java.util.function.LongConsumer;
@@ -53,13 +55,11 @@ import java.util.logging.Logger;
  */
 public class BootLoader {
 
-    private static final String JFX_VERSION = "15.0.1";
+    private static final String JFX_VERSION = loadJavaFxVersion();
 
     private static final String MAVEN_REPO = "https://repo1.maven.org/maven2/org/openjfx/";
 
     private static final String FILE_PATTERN = "javafx-{0}-{1}-{2}.jar";
-
-    private static final String SEPARATOR = System.getProperty("file.separator");
 
     private static final String OS = getOS();
 
@@ -72,15 +72,44 @@ public class BootLoader {
     // download them all
     private static final String[] JARS = new String[]{"base", "controls", "fxml", "graphics", "media", "swing", "web"};
 
+    private static String loadJavaFxVersion() {
+        final Properties properties = new Properties();
+
+        try (final InputStream stream = BootLoader.class.getResourceAsStream("bootloader.properties")) {
+            if (stream == null) {
+                throw new IllegalStateException("Bootloader JavaFX configuration is missing");
+            }
+            properties.load(stream);
+        } catch (final IOException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+
+        final String version = properties.getProperty("javafx.version");
+        if (version == null || version.isBlank() || version.contains("${")) {
+            throw new IllegalStateException("Bootloader JavaFX version is missing");
+        }
+        return version;
+    }
+
+    static String getJavaFxVersion() {
+        return JFX_VERSION;
+    }
+
+    static String getJavaFxFileName(final String module, final String os) {
+        return MessageFormat.format(FILE_PATTERN, module, JFX_VERSION, os);
+    }
+
+    static String getJavaFxDownloadUrl(final String module, final String os) {
+        return MAVEN_REPO + "javafx-" + module + "/" + JFX_VERSION + "/" + getJavaFxFileName(module, os);
+    }
+
     public static boolean doFilesExist() {
         String libPath = getLibPath();
 
         boolean result = true;
 
-        final String pathSpec = libPath + SEPARATOR + FILE_PATTERN;
-
         for (final String fxJar : JARS) {
-            Path path = Paths.get(MessageFormat.format(pathSpec, fxJar, JFX_VERSION, OS));
+            Path path = Paths.get(libPath, getJavaFxFileName(fxJar, OS));
             if (!Files.exists(path)) {
                 result = false;
                 break;
@@ -128,9 +157,6 @@ public class BootLoader {
 
             Files.createDirectories(lib);   // create the directory if needed
 
-            final String spec = MAVEN_REPO + "javafx-{0}/{1}/" + FILE_PATTERN;
-            final String pathSpec = lib + SEPARATOR + FILE_PATTERN;
-
             final LongConsumer countConsumer = new LongConsumer() {
                 long totalCounts;
 
@@ -142,8 +168,8 @@ public class BootLoader {
             };
 
             for (final String fxJar : JARS) {
-                URL url = new URL(MessageFormat.format(spec, fxJar, JFX_VERSION, OS));
-                Path path = Paths.get(MessageFormat.format(pathSpec, fxJar, JFX_VERSION, OS));
+                URL url = new URL(getJavaFxDownloadUrl(fxJar, OS));
+                Path path = lib.resolve(getJavaFxFileName(fxJar, OS));
 
                 if (!Files.exists(path)) {
                     fileNameConsumer.accept(url.toExternalForm());
@@ -173,8 +199,7 @@ public class BootLoader {
         long size = 0;
 
         for (String fxJar : JARS) {
-            final String spec = MAVEN_REPO + "javafx-{0}/{1}/" + FILE_PATTERN;
-            URL url = new URL(MessageFormat.format(spec, fxJar, JFX_VERSION, OS));
+            URL url = new URL(getJavaFxDownloadUrl(fxJar, OS));
 
             size += getFileDownloadSize(url);
         }

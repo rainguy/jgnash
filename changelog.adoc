@@ -18,6 +18,9 @@
 * Reinstate archive capability
 * Open zipped backups instead of manually unzipping.
 
+== Release 3.7.1
+* 08/08/2026 Fixed the bootloader downloading JavaFX 15 instead of the JavaFX 21 runtime used by the application.
+
 == Release 3.7.0
 * 08/08/2026 Updated the build and runtime baseline to Java 21.
 * 08/08/2026 Centralized build conventions and dependency versions.

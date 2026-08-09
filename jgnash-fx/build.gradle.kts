@@ -73,6 +73,18 @@ javafx {
             "javafx.graphics", "javafx.media")
 }
 
+tasks.processResources {
+    val javaFxVersion = libs.versions.javafx.get()
+    inputs.property("javaFxVersion", javaFxVersion)
+    filesMatching("jgnash/bootloader/bootloader.properties") {
+        expand("javaFxVersion" to javaFxVersion)
+    }
+}
+
+tasks.test {
+    systemProperty("jgnash.test.javafx.version", libs.versions.javafx.get())
+}
+
 tasks.startScripts {
     applicationName = "bootloader"
 }

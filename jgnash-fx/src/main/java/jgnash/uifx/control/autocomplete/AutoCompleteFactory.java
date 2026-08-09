@@ -103,10 +103,6 @@ public class AutoCompleteFactory {
 
         volatile boolean load = false;
 
-        TransactionModel() {
-            init();
-        }
-
         final void init() {
             MessageBus.getInstance().registerListener(this, MessageChannel.TRANSACTION, MessageChannel.SYSTEM);
             load();
@@ -168,6 +164,10 @@ public class AutoCompleteFactory {
 
     private static final class MemoModel extends PayeeModel {
 
+        MemoModel() {
+            init();
+        }
+
         @Override
         void load(final Transaction tran) {
             if (tran != null) {
@@ -188,8 +188,9 @@ public class AutoCompleteFactory {
         private final Account account;
 
         PayeeAccountModel(final Account account) {
-            super();
             this.account = account;
+            // Loading may begin immediately on the JavaFX thread, so initialize only after assigning the account.
+            init();
         }
 
         @Override

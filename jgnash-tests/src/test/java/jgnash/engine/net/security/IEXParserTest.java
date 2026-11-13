@@ -18,6 +18,7 @@
 package jgnash.engine.net.security;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
@@ -37,8 +38,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 
 import static jgnash.engine.net.security.YahooEventParserTest.GITHUB_ACTION;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -52,7 +52,7 @@ public class IEXParserTest  extends AbstractEngineTest {
     @Override
     protected Engine createEngine() throws IOException {
 
-        database = testFolder.createFile("iex-test.bxds").getAbsolutePath();
+        database = Files.createFile(testFolder.resolve("iex-test.bxds")).toString();
         EngineFactory.deleteDatabase(database);
 
         return EngineFactory.bootLocalEngine(database, EngineFactory.DEFAULT, EngineFactory.EMPTY_PASSWORD,
@@ -85,7 +85,7 @@ public class IEXParserTest  extends AbstractEngineTest {
         final SecurityParser securityParser = quoteSource.getParser();
         assertNotNull(securityParser);
 
-        assertThat(securityParser, instanceOf(IEXParser.class));
+        assertInstanceOf(IEXParser.class, securityParser);
 
         ((IEXParser)securityParser).setUseSandbox();
         securityParser.setTokenSupplier(() -> System.getenv(TEST_TOKEN));
@@ -124,7 +124,7 @@ public class IEXParserTest  extends AbstractEngineTest {
         final SecurityParser securityParser = quoteSource.getParser();
         assertNotNull(securityParser);
 
-        assertThat(securityParser, instanceOf(IEXParser.class));
+        assertInstanceOf(IEXParser.class, securityParser);
 
         ((IEXParser)securityParser).setUseSandbox();
         securityParser.setTokenSupplier(() -> System.getenv(TEST_TOKEN));
@@ -162,7 +162,7 @@ public class IEXParserTest  extends AbstractEngineTest {
         final SecurityParser securityParser = quoteSource.getParser();
         assertNotNull(securityParser);
 
-        assertThat(securityParser, instanceOf(IEXParser.class));
+        assertInstanceOf(IEXParser.class, securityParser);
 
         ((IEXParser)securityParser).setUseSandbox();
         securityParser.setTokenSupplier(() -> System.getenv(TEST_TOKEN));

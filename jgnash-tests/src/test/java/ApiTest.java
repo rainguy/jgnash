@@ -16,6 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import java.io.IOException;
+import java.nio.file.Files;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class ApiTest extends AbstractEngineTest {
 
     @Override
     protected Engine createEngine() throws IOException {
-        database = testFolder.createFile("api-test.bxds").getAbsolutePath();
+        database = Files.createFile(testFolder.resolve("api-test.bxds")).toString();
 
         EngineFactory.deleteDatabase(database);
 

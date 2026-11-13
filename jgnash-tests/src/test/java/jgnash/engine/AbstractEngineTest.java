@@ -17,14 +17,13 @@
  */
 package jgnash.engine;
 
-import io.github.glytching.junit.extension.folder.TemporaryFolder;
-import io.github.glytching.junit.extension.folder.TemporaryFolderExtension;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +37,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @author Craig Cavanaugh
  */
-@ExtendWith(TemporaryFolderExtension.class)
 public abstract class AbstractEngineTest {
 
-    protected TemporaryFolder testFolder;
+    @TempDir
+    protected Path testFolder;
 
     protected String database;
 
@@ -64,10 +63,8 @@ public abstract class AbstractEngineTest {
     protected abstract Engine createEngine() throws IOException;
 
     @BeforeEach
-    public void setUp(final TemporaryFolder testFolder) throws Exception {
+    public void setUp() throws Exception {
         Locale.setDefault(Locale.US);
-
-        this.testFolder = testFolder;
 
         e = createEngine();
 

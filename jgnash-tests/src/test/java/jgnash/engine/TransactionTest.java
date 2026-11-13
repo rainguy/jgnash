@@ -1,13 +1,12 @@
 package jgnash.engine;
 
-import io.github.glytching.junit.extension.folder.TemporaryFolder;
-import io.github.glytching.junit.extension.folder.TemporaryFolderExtension;
-
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,12 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class TransactionTest {
 
     @Test
-    @ExtendWith(TemporaryFolderExtension.class)
-    void testBackEnd(final TemporaryFolder testFolder) throws IOException {
+    void testBackEnd(@TempDir final Path testFolder) throws IOException {
 
         assertNotNull(testFolder);
 
-        final String database = testFolder.createFile("transaction-test.xml").getAbsolutePath();
+        final String database = Files.createFile(testFolder.resolve("transaction-test.xml")).toString();
 
         EngineFactory.deleteDatabase(database);
 
@@ -74,16 +72,16 @@ class TransactionTest {
             assertEquals(new BigDecimal("500.00"), transaction.getAmount(usdBankAccount));
             assertEquals(new BigDecimal("500.00"), usdBankAccount.getBalance());
 
-            EngineFactory.closeEngine(EngineFactory.DEFAULT);
         } catch (final Exception e) {
             fail(e.getMessage());
+        } finally {
+            EngineFactory.closeEngine(EngineFactory.DEFAULT);
         }
     }
 
     @Test
-    @ExtendWith(TemporaryFolderExtension.class)
-    void testEmptyAccount(final TemporaryFolder testFolder) throws IOException {
-        final String database = testFolder.createFile("empty-test.xml").getAbsolutePath();
+    void testEmptyAccount(@TempDir final Path testFolder) throws IOException {
+        final String database = Files.createFile(testFolder.resolve("empty-test.xml")).toString();
 
         EngineFactory.deleteDatabase(database);
 
@@ -113,6 +111,8 @@ class TransactionTest {
             assertTrue(transactions.isEmpty());
         } catch (final Exception e) {
             fail(e.getMessage());
+        } finally {
+            EngineFactory.closeEngine(EngineFactory.DEFAULT);
         }
     }
 

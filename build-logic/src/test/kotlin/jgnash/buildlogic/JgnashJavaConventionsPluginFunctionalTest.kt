@@ -1,10 +1,13 @@
 package jgnash.buildlogic
 
 import org.gradle.testkit.runner.GradleRunner
+import org.gradle.testkit.runner.TaskOutcome
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.nio.file.Files
 import java.nio.file.Path
+import javax.xml.parsers.DocumentBuilderFactory
 
 class JgnashJavaConventionsPluginFunctionalTest {
     @TempDir
@@ -18,17 +21,15 @@ class JgnashJavaConventionsPluginFunctionalTest {
             projectDirectory.resolve("gradle/libs.versions.toml"),
             """
             [versions]
-            junit = "5.7.1"
-            junit-platform = "1.7.1"
-            junit-extensions = "2.4.0"
+            junit = "5.14.4"
             awaitility = "4.0.3"
 
             [libraries]
-            junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
-            junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit" }
-            junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
-            junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
-            junit-extensions = { module = "io.github.glytching:junit-extensions", version.ref = "junit-extensions" }
+            junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+            junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
+            junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params" }
+            junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
+            junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
             awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitility" }
             """.trimIndent()
         )
@@ -47,6 +48,10 @@ class JgnashJavaConventionsPluginFunctionalTest {
 
             description = "Fixture module"
 
+            repositories {
+                mavenCentral()
+            }
+
             val configuredGroup = project.group
             val configuredVersion = project.version
             val java = extensions.getByType<JavaPluginExtension>()
@@ -56,7 +61,7 @@ class JgnashJavaConventionsPluginFunctionalTest {
             val testRuntimeClasspath = configurations.getByName("testRuntimeClasspath")
 
             tasks.register("assertConventions") {
-                dependsOn(jar)
+                dependsOn(jar, test)
 
                 doLast {
                     check(configuredGroup == "jgnash")
@@ -76,19 +81,63 @@ class JgnashJavaConventionsPluginFunctionalTest {
                         check(it.manifest.mainAttributes.getValue("Implementation-Version") == "3.7.2")
                     }
 
-                    val testDependencies = testRuntimeClasspath.allDependencies
+                    val testDependencies = testRuntimeClasspath.incoming.resolutionResult.allComponents
+                        .mapNotNull { it.moduleVersion }
                         .map { "${'$'}{it.group}:${'$'}{it.name}:${'$'}{it.version}" }.toSet()
-                    check("org.junit.jupiter:junit-jupiter-api:5.7.1" in testDependencies)
+                    check("org.junit:junit-bom:5.14.4" in testDependencies)
+                    check("org.junit.jupiter:junit-jupiter-api:5.14.4" in testDependencies)
+                    check("org.junit.jupiter:junit-jupiter-params:5.14.4" in testDependencies)
+                    check("org.junit.jupiter:junit-jupiter-engine:5.14.4" in testDependencies)
+                    check("org.junit.platform:junit-platform-launcher:1.14.4" in testDependencies)
+                    check("org.junit.platform:junit-platform-engine:1.14.4" in testDependencies)
+                    check("org.junit.platform:junit-platform-commons:1.14.4" in testDependencies)
+                    check(testDependencies.none { it.startsWith("io.github.glytching:") })
                     check("org.awaitility:awaitility:4.0.3" in testDependencies)
                 }
             }
             """.trimIndent()
         )
 
-        GradleRunner.create()
+        val testSources = Files.createDirectories(projectDirectory.resolve("src/test/java"))
+        Files.writeString(
+            testSources.resolve("FixtureTest.java"),
+            """
+            import java.nio.file.Files;
+            import java.nio.file.Path;
+            import org.junit.jupiter.api.io.TempDir;
+            import org.junit.jupiter.params.ParameterizedTest;
+            import org.junit.jupiter.params.provider.ValueSource;
+            import static org.junit.jupiter.api.Assertions.assertEquals;
+            import static org.junit.jupiter.api.Assertions.assertFalse;
+
+            class FixtureTest {
+                @TempDir
+                Path directory;
+
+                @ParameterizedTest
+                @ValueSource(strings = {"first", "second"})
+                void writesInTemporaryDirectory(String value) throws Exception {
+                    Path file = directory.resolve("value.txt");
+                    assertFalse(Files.exists(file));
+                    Files.writeString(file, value);
+                    assertEquals(value, Files.readString(file));
+                }
+            }
+            """.trimIndent()
+        )
+
+        val result = GradleRunner.create()
             .withProjectDir(projectDirectory.toFile())
             .withArguments("assertConventions", "--stacktrace", "--warning-mode=fail")
             .withPluginClasspath()
             .build()
+
+        assertEquals(TaskOutcome.SUCCESS, result.task(":test")?.outcome)
+        val report = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+            projectDirectory.resolve("build/test-results/test/TEST-FixtureTest.xml").toFile()
+        ).documentElement
+        assertEquals("2", report.getAttribute("tests"))
+        assertEquals("0", report.getAttribute("failures"))
+        assertEquals("0", report.getAttribute("errors"))
     }
 }

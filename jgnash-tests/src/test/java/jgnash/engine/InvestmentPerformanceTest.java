@@ -18,6 +18,7 @@
 package jgnash.engine;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
@@ -47,7 +48,7 @@ public class InvestmentPerformanceTest extends AbstractEngineTest {
 
     @Override
     protected Engine createEngine() throws IOException {
-        database = testFolder.createFile("invest-perform-test.xml").getAbsolutePath();
+        database = Files.createFile(testFolder.resolve("invest-perform-test.xml")).toString();
 
         EngineFactory.deleteDatabase(database);
 

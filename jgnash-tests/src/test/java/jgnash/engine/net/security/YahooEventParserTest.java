@@ -18,6 +18,7 @@
 package jgnash.engine.net.security;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
@@ -58,7 +59,7 @@ public class YahooEventParserTest extends AbstractEngineTest {
     @Override
     protected Engine createEngine() throws IOException {
 
-        database = testFolder.createFile("yahoo-test.bxds").getAbsolutePath();
+        database = Files.createFile(testFolder.resolve("yahoo-test.bxds")).toString();
         EngineFactory.deleteDatabase(database);
 
         return EngineFactory.bootLocalEngine(database, EngineFactory.DEFAULT, EngineFactory.EMPTY_PASSWORD,

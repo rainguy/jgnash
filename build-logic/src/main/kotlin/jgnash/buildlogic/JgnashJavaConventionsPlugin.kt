@@ -93,6 +93,10 @@ class JgnashJavaConventionsPlugin : Plugin<Project> {
             val libraries = extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
             dependencies.add(
                 "testImplementation",
+                dependencies.platform(libraries.findLibrary("junit-bom").get())
+            )
+            dependencies.add(
+                "testImplementation",
                 libraries.findLibrary("junit-jupiter-api").get()
             )
             dependencies.add(
@@ -106,10 +110,6 @@ class JgnashJavaConventionsPlugin : Plugin<Project> {
             dependencies.add(
                 "testRuntimeOnly",
                 libraries.findLibrary("junit-platform-launcher").get()
-            )
-            dependencies.add(
-                "testImplementation",
-                libraries.findLibrary("junit-extensions").get()
             )
             dependencies.add("testImplementation", libraries.findLibrary("awaitility").get())
         }

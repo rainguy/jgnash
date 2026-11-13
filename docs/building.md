@@ -45,3 +45,21 @@ Temurin 21 explicitly and treats Gradle deprecations as failures.
 The historical Java 11 environment under `docs/baselines/legacy-java11` exists
 only to reproduce the pre-modernization baseline. It is not the toolchain for
 current development builds.
+
+## Test dependencies
+
+The shared convention plugin and the included `build-logic` build import the
+JUnit BOM from `gradle/libs.versions.toml`. Jupiter and Platform dependencies
+omit individual versions so the BOM keeps the API, parameterized tests,
+engine, and launcher aligned. Change the catalog's `junit` version when
+updating JUnit, then run the build-logic functional test and the complete
+`check` gate and compare test discovery counts.
+
+Use JUnit's built-in `@TempDir` for temporary directories. Tests must close
+engines and other file handles before JUnit cleans up those directories,
+including on failure. The former `junit-extensions` dependency is no longer
+needed; its temporary-folder support and the remaining Hamcrest type checks
+have JUnit equivalents.
+
+See JUnit's [BOM guidance](https://docs.junit.org/5.14.4/running-tests/build-support.html#_aligning_dependency_versions)
+and [temporary-directory documentation](https://docs.junit.org/5.14.4/writing-tests/built-in-extensions.html#writing-tests-built-in-extensions-TempDirectory).

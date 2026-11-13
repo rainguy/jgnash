@@ -41,7 +41,7 @@ public class OfxExportText extends AbstractEngineTest {
 
     @Override
     protected Engine createEngine() throws IOException {
-        database = testFolder.createFile("ofxExportTest.xml").getAbsolutePath();
+        database = Files.createFile(testFolder.resolve("ofxExportTest.xml")).toString();
 
         EngineFactory.deleteDatabase(database);
 

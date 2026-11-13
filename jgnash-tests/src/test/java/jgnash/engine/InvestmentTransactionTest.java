@@ -3,6 +3,7 @@ package jgnash.engine;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -28,7 +29,7 @@ public class InvestmentTransactionTest extends AbstractEngineTest {
 
     @Override
     protected Engine createEngine() throws IOException {
-        database = testFolder.createFile("invest-transaction-test.xml").getAbsolutePath();
+        database = Files.createFile(testFolder.resolve("invest-transaction-test.xml")).toString();
 
         EngineFactory.deleteDatabase(database);
 

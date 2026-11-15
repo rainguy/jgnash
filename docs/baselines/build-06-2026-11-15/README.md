@@ -49,6 +49,24 @@ discovered tests, zero failures/errors, and two expected Yahoo network skips.
 This preserves the preceding 373 tests and adds three dependency-integrity
 cases. Per-suite counts are recorded in [test-discovery.tsv](test-discovery.tsv).
 
+## Hosted evidence and residual uncertainty
+
+[Fresh-cache run 43732630158](https://github.com/rainguy/jgnash/actions/runs/43732630158)
+passes Ubuntu x64, Windows x64, macOS Intel, macOS Apple Silicon, and wrapper
+validation. Each platform validates all configurations, the clean test gate,
+and standalone build-logic resolution. The completed logs confirm
+`cache-disabled: true`, including the Ubuntu retry. The workflow also passes
+actionlint 1.7.12 validation.
+
+The [first Ubuntu attempt](https://github.com/rainguy/jgnash/actions/runs/43732630158/job/132868269780)
+reached `:jgnash-tests:test` after successful resolution, compilation, build-logic
+tests, and JavaFX checks, then hit the 30-minute job timeout. It reported no
+failed test or checksum error before cancellation. One fresh-runner retry
+passed the full gate in 5m 38s and standalone resolution in 5s. A local core-suite
+repeat with `JAVA_TOOL_OPTIONS=-Duser.timezone=America/New_York` and temporary
+per-test start logging passed in 4m 1s. The hang did not reproduce locally and
+its cause remains undetermined; bounded test/worker diagnostics remain relevant
+to the pending `TEST-02` flake-removal work.
+
 The [dependency policy](../../dependency-policy.md) describes intentional
-refreshes and the scheduled/manual fresh-cache hosted matrix. Hosted acceptance
-is recorded in the modernization execution ledger after the matrix completes.
+refreshes and the scheduled/manual fresh-cache hosted matrix.

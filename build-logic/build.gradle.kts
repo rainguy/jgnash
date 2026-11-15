@@ -3,6 +3,14 @@ plugins {
     `java-gradle-plugin`
 }
 
+apply(from = "../gradle/dependency-policy.gradle.kts")
+
+// This build produces JVM plugins only. Kotlin registers a native-toolchain
+// downloader even here; keep it out of dependency maintenance on every host.
+configurations.named("kotlinNativeBundleConfiguration") {
+    isCanBeResolved = false
+}
+
 gradlePlugin {
     plugins {
         create("javaConventions") {
@@ -24,6 +32,7 @@ tasks.test {
     inputs.files(
         rootDir.parentFile.resolve("settings.gradle.kts"),
         rootDir.resolve("settings.gradle.kts"),
-        rootDir.parentFile.resolve("gradle/libs.versions.toml")
+        rootDir.parentFile.resolve("gradle/libs.versions.toml"),
+        rootDir.parentFile.resolve("gradle/dependency-policy.gradle.kts")
     ).withPropertyName("repositoryPolicyFiles").withPathSensitivity(PathSensitivity.RELATIVE)
 }

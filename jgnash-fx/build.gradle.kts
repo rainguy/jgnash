@@ -1,4 +1,5 @@
 import edu.sc.seis.macAppBundle.MacAppBundlePluginExtension
+import org.gradle.api.attributes.Attribute
 
 description = "jGnash"
 
@@ -17,11 +18,28 @@ val legacyMacPackagingRequested = gradle.startParameter.taskNames.any {
 val jGnashVersion : String = version.toString()
 val macAppDirectory = layout.buildDirectory.dir("macApp")
 
+// Resolve every supported native variant during dependency maintenance and CI,
+// independently of the host selected by the JavaFX plugin.
+val javafxVerificationConfigurations = listOf("linux", "win", "mac", "mac-aarch64").associateWith { platform ->
+    configurations.create("javafxVerification${platform.replace("-", "_")}") {
+        isCanBeConsumed = false
+        isCanBeResolved = true
+        isTransitive = false // All seven modules are requested explicitly below.
+    }
+}
+
 application {
     mainClass.set("jgnash.app.jGnash")
 }
 
 dependencies {
+    for (library in listOf(libs.javafx.base, libs.javafx.fxml, libs.javafx.controls,
+            libs.javafx.graphics, libs.javafx.media, libs.javafx.swing, libs.javafx.web)) {
+        for ((platform, configuration) in javafxVerificationConfigurations) {
+            add(configuration.name, variantOf(library) { classifier(platform) })
+        }
+    }
+
     implementation(project(":jgnash-resources"))
     implementation(project(":jgnash-core"))
     implementation(project(":jgnash-convert"))
@@ -136,15 +154,21 @@ distributions {
     }
 }
 
-if (legacyMacPackagingRequested) {
-    // macAppBundle 2.3.0 reads the removed Java plugin "runtime" configuration.
-    // Keep this isolated compatibility view until PKG-01 replaces the plugin.
-    configurations.create("runtime") {
-        extendsFrom(configurations.runtimeClasspath.get())
-        isCanBeConsumed = false
-        isCanBeResolved = true
+// Keep this compatibility graph visible to locking even when packaging is not
+// requested. macAppBundle reads the removed Java plugin "runtime" configuration.
+configurations.create("runtime") {
+    val source = configurations.runtimeClasspath.get()
+    extendsFrom(source)
+    isCanBeConsumed = false
+    isCanBeResolved = true
+    // Configuration inheritance covers dependencies, but not variant attributes.
+    fun <T : Any> copyAttribute(key: Attribute<T>) {
+        source.attributes.getAttribute(key)?.let { attributes.attribute(key, it) }
     }
+    source.attributes.keySet().forEach { copyAttribute(it) }
+}
 
+if (legacyMacPackagingRequested) {
     apply(plugin = "edu.sc.seis.macAppBundle")
 
     configure<MacAppBundlePluginExtension> {

@@ -64,6 +64,13 @@ including rejection of module repositories and an artifact planted in a temporar
 Maven Local repository. See Gradle's
 [repository management documentation](https://docs.gradle.org/current/userguide/centralizing_repositories.html).
 
+All resolvable project configurations use strict dependency locks. SHA-256
+verification covers external artifacts and their metadata, including Gradle
+plugins and every supported JavaFX native variant. Normal builds validate the
+committed state; dependency updates must deliberately refresh and review it.
+See the [dependency maintenance procedure](dependency-policy.md) for commands,
+review requirements, standalone build-logic behavior, and fresh-cache CI.
+
 ## Test dependencies
 
 The shared convention plugin and the included `build-logic` build import the

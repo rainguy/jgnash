@@ -37,6 +37,7 @@ Never attach real financial files to a pull request.
 - [ ] Threat/security impact reviewed
 - [ ] Logs and diagnostics checked for credentials and financial data
 - [ ] Dependency and static-security reports reviewed
+- [ ] Dependency changes include reviewed lockfile and SHA-256 verification-metadata updates, including JavaFX platform variants
 - [ ] Any suppression includes rationale, owner, and expiry
 
 ## Verification

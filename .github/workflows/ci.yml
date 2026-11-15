@@ -3,7 +3,14 @@ name: CI
 on:
   push:
   pull_request:
+  schedule:
+    - cron: '23 7 * * 1'
   workflow_dispatch:
+    inputs:
+      fresh_dependencies:
+        description: Start with a fresh Gradle dependency cache
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -29,6 +36,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     env:
+      GRADLE_USER_HOME: ${{ runner.temp }}/jgnash-gradle-home
       # The reviewed H2 1.3 fixture was created in this zone; legacy DATE values are zone-sensitive.
       JAVA_TOOL_OPTIONS: -Duser.timezone=America/New_York
     strategy:
@@ -52,16 +60,26 @@ jobs:
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@4733eaac7c1b0da527e4206b7671e0061de1ce37 # v6
+        with:
+          cache-disabled: ${{ github.event_name == 'schedule' || inputs.fresh_dependencies == true }}
 
       - name: Run verification
         if: runner.os != 'Windows'
-        run: ./gradlew build-logic:test clean check --warning-mode=fail --no-daemon --stacktrace
+        run: ./gradlew build-logic:test resolveAllDependencies build-logic:resolveAllDependencies clean check --warning-mode=fail --no-daemon --stacktrace
 
       - name: Run verification
         if: runner.os == 'Windows'
-        run: .\gradlew.bat build-logic:test clean check --warning-mode=fail --no-daemon --stacktrace
+        run: .\gradlew.bat build-logic:test resolveAllDependencies build-logic:resolveAllDependencies clean check --warning-mode=fail --no-daemon --stacktrace
 
-      - name: Upload test reports on failure
+      - name: Verify standalone build-logic dependencies
+        if: runner.os != 'Windows'
+        run: ./gradlew -p build-logic resolveAllDependencies --warning-mode=fail --no-daemon --stacktrace
+
+      - name: Verify standalone build-logic dependencies
+        if: runner.os == 'Windows'
+        run: .\gradlew.bat -p build-logic resolveAllDependencies --warning-mode=fail --no-daemon --stacktrace
+
+      - name: Upload verification reports on failure
         if: failure()
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
@@ -69,4 +87,5 @@ jobs:
           path: |
             **/build/test-results/**
             **/build/reports/tests/**
+            **/build/reports/dependency-verification/**
           if-no-files-found: warn

@@ -46,6 +46,24 @@ The historical Java 11 environment under `docs/baselines/legacy-java11` exists
 only to reproduce the pre-modernization baseline. It is not the toolchain for
 current development builds.
 
+## Dependency repositories
+
+Both the application and the included `build-logic` build resolve library
+dependencies exclusively from Maven Central. Their settings files enforce
+`FAIL_ON_PROJECT_REPOS`, so a module or plugin adding a project repository fails
+the build. Gradle plugins resolve through the explicitly declared Gradle Plugin
+Portal; the convention plugin is supplied by the included build.
+
+Normal builds and CI never consult Maven Local or JCenter. There is currently no
+local-publication opt-in; developing the included convention plugin does not
+require publishing it to a local Maven repository. Gradle's own dependency cache
+remains available for subsequent and offline builds.
+
+Repository policy is tested against copies of both production settings files,
+including rejection of module repositories and an artifact planted in a temporary
+Maven Local repository. See Gradle's
+[repository management documentation](https://docs.gradle.org/current/userguide/centralizing_repositories.html).
+
 ## Test dependencies
 
 The shared convention plugin and the included `build-logic` build import the
